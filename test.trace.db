@@ -1,0 +1,6 @@
+2018-07-23 16:54:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FOLDER" not found; SQL statement:
+(SELECT id FROM folder WHERE name_folder = ?) [42102-197]
+2018-07-23 17:01:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "FOLDER" not found; SQL statement:
+(SELECT id FROM folder WHERE name_folder = ?) [42102-197]
