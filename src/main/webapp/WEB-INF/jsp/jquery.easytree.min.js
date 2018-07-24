@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * jQuery EasyTree Plugin
  * http://www.EasyJsTree.com
  *

@@ -3,6 +3,7 @@ package examplebeans.repository;
 import examplebeans.dao.Folder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,19 +25,29 @@ public class FolderRepository {
     public List<Folder> getAllDirectoriesFromFolder(String directory) {
         List<Folder> result = new ArrayList<>();
         extractDataFromDBorFileSystem(directory, result);
-        if (result.size() != 0 && isASearchedFromFileSystem){
-                        String sql = "INSERT INTO folder (name_folder, id_parent) VALUES (?, ?)";
+        if (result.size() != 0 && isASearchedFromFileSystem) {
+            String sql = "INSERT INTO folder (name_folder, id_parent) VALUES (?, ?)";
             result.stream().filter(Objects::nonNull).forEach(folder ->
-                    jdbcTemplate.update(sql, new Object[] { folder.getDirectory().getAbsolutePath(),
-                    idParent
-            }));
+                    jdbcTemplate.update(sql, new Object[]{folder.getDirectory().getAbsolutePath(),
+                            idParent
+                    }));
         }
         return result;
     }
 
+    private void createTable() {
+        String sql = "CREATE TABLE folder ( " +
+                " id INTEGER PRIMARY KEY AUTO_INCREMENT," +
+                " name_folder VARCHAR(255) NOT NULL, " +
+                " id_parent INTEGER);" +
+                " CREATE INDEX idx_folder__id_parent ON folder (id_parent);" +
+                "ALTER TABLE folder ADD CONSTRAINT fk_folder__id_parent FOREIGN KEY (id_parent) REFERENCES folder (id)";
+        jdbcTemplate.execute(sql);
+    }
+
     private void extractDataFromDBorFileSystem(String directory, List<Folder> result) {
         String sqlForChilds = extractSqlForChildFolders(directory);
-        if (sqlForChilds != null){
+        if (sqlForChilds != null) {
             getChildFoldersFromDatabase(result, sqlForChilds);
         } else {
             isASearchedFromFileSystem = true;
@@ -58,7 +69,7 @@ public class FolderRepository {
         try {
             idParent = getIdParent(directory);
             return "SELECT * FROM folder WHERE id_parent = " + idParent;
-        } catch (EmptyResultDataAccessException | NullPointerException e){
+        } catch (EmptyResultDataAccessException | NullPointerException e) {
             String sql = "INSERT INTO folder (name_folder) VALUES (?)";
             jdbcTemplate.update(sql, directory);
             idParent = getIdParent(directory);
@@ -67,9 +78,18 @@ public class FolderRepository {
     }
 
     private Integer getIdParent(String directory) {
-        return jdbcTemplate.queryForObject(
-                "(SELECT id FROM folder WHERE name_folder = ?)",
-                new Object[]{directory}, Integer.class);
+        Integer result;
+        try {
+            result = jdbcTemplate.queryForObject(
+                    "(SELECT id FROM folder WHERE name_folder = ?)",
+                    new Object[]{directory}, Integer.class);
+        } catch (BadSqlGrammarException e){
+            createTable();
+            result = jdbcTemplate.queryForObject(
+                    "(SELECT id FROM folder WHERE name_folder = ?)",
+                    new Object[]{directory}, Integer.class);
+        }
+        return result;
     }
 
     // Возвращает список директорий в папке
