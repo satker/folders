@@ -5,8 +5,10 @@ import examplebeans.service.FolderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
@@ -32,10 +34,18 @@ public class FolderController {
         return model;
     }
 
-
     @RequestMapping(method = RequestMethod.POST, value = "/")
-    public String getPost(ModelMap modelMap){
-        modelMap.addAttribute("message", "Hello Spring MVC Framework!");
-        return "index";
+    public ModelAndView getNextFolder(@RequestParam(value = "text", required = false) String text){
+        System.out.println(text);
+        List<Folder> allForFolder = folderService.getAllForFolder(null);
+        List<String> collect = allForFolder.stream().
+                map(Folder::getDirectory).
+                map(File::getName).
+                map(folder -> folder.split("\\\\")).
+                map(flatFolder -> flatFolder[flatFolder.length - 1]).
+                collect(Collectors.toList());
+        ModelAndView model = new ModelAndView("index");
+        model.addObject("list", collect);
+        return model;
     }
 }
