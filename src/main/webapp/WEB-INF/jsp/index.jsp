@@ -31,26 +31,50 @@
     </div>
     <script>
         var counter = 0;
+        var currentNode = null;
+        var allNodes = null;
+
         function openLazyNode(event, nodes, node, hasChildren) {
+            if(allNodes != null){
+              nodes = allNodes;
+            }
             if (hasChildren) { // don't call ajax if lazy node already has children
                 return false;
             }
-            counter++;
-            textOfNode = node.text;
-            //getPathToThisNode(nodes, node.id);
+            var textOfNode = node.text;
+            if(currentNode != null){
+              if (currentNode.hasChildren){
+                var childrenOfCurrentNode = currentNode.children;
+                iteratesNodesAndChangeIt(nodes, childrenOfCurrentNode);
+              }
+              findChangesNode(nodes, node, textOfNode);
+            }
             node.lazyUrl = '/'+ textOfNode; // must be set here or when the tree is initialised
-            node.lazyUrlJson = JSON.stringify({ text: counter }); // any json object here (optional)
-            //node.lazyUrlJson = "{ text: " + counter + " } "; // IE 6/7 compatible
-        }
+            currentNode = textOfNode;
+            allNodes = nodes;
+       }
 
-        //function getPathToThisNode(nodes, idNode) {
-          //  for(var i = 0, size = nodes.length; i < size ; i++){
-            //    if (nodes[i].id === idNode){
-              //      var node = nodes[i].text;
-                //    node.toString();
-               // }
-           // }
-        //}
+        function iteratesNodesAndChangeIt(nodes, childrenOfCurrentNode) {
+                 for(var i = 0, size = childrenOfCurrentNode.length; i < size ; i++){
+                                     changeCurrentNodes(nodes, childrenOfCurrentNode[i]);
+                     }
+                }
+
+                function findChangesNode(nodes, node, textOfNode) {
+                            for(var i = 0, size = nodes.length; i < size ; i++){
+                                if (nodes[i].id === node.id){
+                                    textOfNode = nodes[i].text;
+                                }
+                            }
+                        }
+
+        function changeCurrentNodes(nodes, node) {
+            for(var i = 0, size = nodes.length; i < size ; i++){
+                if (nodes[i].id === node.id){
+                    nodes[i] = currentNode + '-' + node.text;
+                }
+            }
+        }
 
         var easyTree = $('#demo_menu').easytree({
             openLazyNode: openLazyNode

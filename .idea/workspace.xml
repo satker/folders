@@ -7,19 +7,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8894434d-3c6b-4a56-89a9-dbe5ba3ff8f7" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/examplebeans/repository/SearchingInDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ea3cfab7-a1a0-4ef3-8ea0-b1813a1f69e6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ea3cfab7-a1a0-4ef3-8ea0-b1813a1f69e6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ea3cfab7-a1a0-4ef3-8ea0-b1813a1f69e6/storage_v2/_src_/database/folders.xXFG1w/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ea3cfab7-a1a0-4ef3-8ea0-b1813a1f69e6/storage_v2/_src_/database/folders.xXFG1w/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/trainingCoreSkills_Web_exploded.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/controller-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/controller-servlet.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/examplebeans/controllers/FolderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/examplebeans/controllers/FolderController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/examplebeans/service/FolderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/examplebeans/service/FolderService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.mv.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.trace.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/examplebeans/controllers/FolderController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/examplebeans/dao/Folder$FolderBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/examplebeans/dao/Folder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/examplebeans/service/FolderService.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -76,44 +74,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1827">
+              <caret line="87" column="27" selection-start-line="87" selection-start-column="27" selection-end-line="87" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Thread.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/lang/Thread.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="14574">
+              <caret line="747" selection-start-line="747" selection-end-line="747" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="FolderRepository.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SearchingInDB.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/repository/SearchingInDB.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="console.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/ea3cfab7-a1a0-4ef3-8ea0-b1813a1f69e6/console.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="17" selection-start-column="17" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FolderService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+            <state relative-caret-position="286">
+              <caret line="55" column="28" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -124,29 +107,8 @@
       <file leaf-file-name="FolderController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="918">
-              <caret line="56" column="37" selection-start-line="56" selection-start-column="37" selection-end-line="56" selection-end-column="37" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="web.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/web.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="16" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+            <state relative-caret-position="-216">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -154,8 +116,17 @@
       <file leaf-file-name="controller-servlet.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/controller-servlet.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+            <state relative-caret-position="399">
+              <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="63">
+              <caret line="3" column="107" selection-start-line="3" selection-start-column="107" selection-end-line="3" selection-end-column="107" />
             </state>
           </provider>
         </entry>
@@ -163,8 +134,20 @@
       <file leaf-file-name="index.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="39" column="33" lean-forward="true" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
+            <state relative-caret-position="248">
+              <caret line="43" column="16" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FolderService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="336">
+              <caret line="16" column="45" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -227,12 +210,12 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/jquery.min.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/jquery.easytree.min.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/ea3cfab7-a1a0-4ef3-8ea0-b1813a1f69e6/console.sql" />
         <option value="$PROJECT_DIR$/src/main/java/examplebeans/repository/SearchingInDB.java" />
         <option value="$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/controller-servlet.xml" />
         <option value="$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" />
       </list>
     </option>
@@ -277,6 +260,12 @@
         <path>
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
           <item name="trainingCoreSkills" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="tomcat7" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="trainingCoreSkills" type="9519ce18:MavenProjectsStructure$ProjectNode" />
           <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
         </path>
       </expand>
@@ -287,10 +276,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="511" />
-    <option name="y" value="3" />
-    <option name="width" value="835" />
-    <option name="height" value="735" />
+    <option name="x" value="939" />
+    <option name="width" value="990" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -298,9 +286,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -373,14 +361,6 @@
               <item name="folders" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="examplefolders" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="folders" type="b2602c69:ProjectViewProjectNode" />
-              <item name="folders" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -421,19 +401,19 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.1484375" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\java_projects\trainingCoreSkills\src\main\webapp\WEB-INF\jsp" />
+      <recent name="D:\java_projects\trainingCoreSkills\src\main\resources\WEB-INF\jsp" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Artem_Kunats\IdeaProjects\folders\src\main\webapp\WEB-INF" />
       <recent name="D:\java_projects\folders\src\main\webapp\WEB-INF" />
       <recent name="D:\java_projects\folders\src\main\webapp" />
       <recent name="D:\java_projects\trainingCoreSkills\src\main\webapp\WEB-INF" />
       <recent name="D:\java_projects\trainingCoreSkills\src\main\webapp" />
-      <recent name="C:\Users\Artem_Kunats\IdeaProjects\folders\src\main\webapp\WEB-INF" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\java_projects\trainingCoreSkills\src\main\webapp\WEB-INF\jsp" />
-      <recent name="D:\java_projects\trainingCoreSkills\src\main\resources\WEB-INF\jsp" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -448,7 +428,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Unnamed">
+  <component name="RunManager" selected="Maven.Unnamed">
     <configuration name="FolderRepository" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="examplebeans.repository.FolderRepository" />
       <module name="trainingCoreSkills" />
@@ -495,7 +475,7 @@
             </option>
             <option name="goals">
               <list>
-                <option value="tomcat7:run" />
+                <option value="tomcat7:run-war" />
               </list>
             </option>
             <option name="pomFileName" />
@@ -677,8 +657,6 @@
     </configuration>
     <list>
       <item itemvalue="Maven.Unnamed" />
-      <item itemvalue="Tomcat Server.Unnamed" />
-      <item itemvalue="Tomcat Server.index.jsp" />
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.FolderRepository" />
     </list>
@@ -737,46 +715,45 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32575756" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5015129" side_tool="true" weight="0.31683168" />
-      <window_info anchor="bottom" id="Application Servers" order="8" weight="0.32843137" />
-      <window_info anchor="right" id="Maven Projects" order="3" weight="0.32753405" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Maven Projects" order="3" weight="0.3272921" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49848714" weight="0.31601733" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="right" id="Mongo Explorer" order="4" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4989339" weight="0.32900432" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="3" weight="0.32980332" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2889126" />
+      <window_info anchor="bottom" id="Docker" order="8" weight="0.32900432" />
+      <window_info anchor="bottom" id="SonarLint" order="8" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49848714" weight="0.42079207" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32673267" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="2" />
-      <window_info anchor="bottom" id="Java Enterprise" order="7" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49848714" weight="0.31683168" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Spring" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4989339" weight="0.32900432" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28895614" />
-      <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49848714" visible="true" weight="0.4199134" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="right" id="Mongo Explorer" order="4" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" order="8" weight="0.32900432" />
       <window_info anchor="bottom" id="Database Console" order="9" weight="0.33333334" />
+      <window_info anchor="bottom" id="Java Enterprise" order="7" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" weight="0.32980332" />
       <window_info anchor="right" id="CDI" order="3" />
-      <window_info anchor="bottom" id="SonarLint" order="8" />
+      <window_info anchor="bottom" id="Application Servers" order="8" weight="0.32843137" />
+      <window_info anchor="bottom" id="Spring" order="8" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32843137" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
     </layout>
     <layout-to-restore>
       <window_info anchor="bottom" id="Application Servers" order="13" weight="0.32843137" />
@@ -804,15 +781,15 @@
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="12" />
       <window_info anchor="right" id="Maven Projects" order="6" weight="0.32782516" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27987897" />
       <window_info active="true" anchor="right" id="Database" order="7" visible="true" weight="0.32980332" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
-      <window_info anchor="right" id="CDI" order="5" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Mongo Explorer" order="10" />
+      <window_info anchor="right" id="CDI" order="5" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32843137" />
       <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.39869282" />
@@ -820,6 +797,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.jsp" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -831,12 +811,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java</url>
-          <line>37</line>
-          <properties />
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/examplebeans/repository/SearchingInDB.java</url>
           <line>61</line>
@@ -874,18 +848,6 @@
           <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java</url>
-          <line>38</line>
-          <properties />
-          <option name="timeStamp" value="79" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java</url>
-          <line>39</line>
-          <properties />
-          <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/examplebeans/repository/SearchingInDB.java</url>
           <line>29</line>
           <properties />
@@ -897,38 +859,8 @@
           <properties />
           <option name="timeStamp" value="82" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java</url>
-          <line>44</line>
-          <properties />
-          <option name="timeStamp" value="86" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java</url>
-          <line>50</line>
-          <properties />
-          <option name="timeStamp" value="87" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java</url>
-          <line>38</line>
-          <properties />
-          <option name="timeStamp" value="95" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp</url>
-          <line>48</line>
-          <properties />
-          <option name="timeStamp" value="99" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp</url>
-          <line>49</line>
-          <properties />
-          <option name="timeStamp" value="100" />
-        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="101" />
+      <option name="time" value="103" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
@@ -965,13 +897,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="26" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/beans/A.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/beans/B.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/Main.java" />
@@ -1010,15 +935,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/jquery-3.3.1.min.js" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/lang/Thread.java" />
-    <entry file="file://$PROJECT_DIR$/test.trace.db" />
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/lang/Thread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1156">
-          <caret line="68" selection-start-line="68" selection-end-line="68" />
+        <state relative-caret-position="14574">
+          <caret line="747" selection-start-line="747" selection-end-line="747" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test.trace.db" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/bootstrap.js" />
     <entry file="file://$PROJECT_DIR$/target/trainingCoreSkills-1.0-SNAPSHOT/jsp/index.jsp" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/myJS.js" />
@@ -1065,23 +989,7 @@
       </provider>
     </entry>
     <entry file="das://ea3cfab7-a1a0-4ef3-8ea0-b1813a1f69e6/database/folders/schema/public/table/folder" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/ea3cfab7-a1a0-4ef3-8ea0-b1813a1f69e6/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="17" selection-start-column="17" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/ea3cfab7-a1a0-4ef3-8ea0-b1813a1f69e6/console.sql" />
     <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/repository/SearchingInDB.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
@@ -1092,44 +1000,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/web.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/exercise.html" />
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="16" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="16" />
+        <state relative-caret-position="63">
+          <caret line="3" column="107" selection-start-line="3" selection-start-column="107" selection-end-line="3" selection-end-column="107" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="1827">
+          <caret line="87" column="27" selection-start-line="87" selection-start-column="27" selection-end-line="87" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/controller-servlet.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+        <state relative-caret-position="399">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="56" column="37" selection-start-line="56" selection-start-column="37" selection-end-line="56" selection-end-column="37" />
+        <state relative-caret-position="286">
+          <caret line="55" column="28" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="45" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-216">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="39" column="33" lean-forward="true" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
+        <state relative-caret-position="248">
+          <caret line="43" column="16" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -1139,7 +1062,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>trainingCoreSkills:war</last-edited>
+          <last-edited>unnamed</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1152,7 +1075,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>Spring</last-edited>
+          <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1188,11 +1111,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Web|trainingCoreSkills</last-edited>
+          <last-edited>folders</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
