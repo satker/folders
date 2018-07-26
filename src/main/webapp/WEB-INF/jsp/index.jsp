@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -35,16 +36,25 @@
                 return false;
             }
             counter++;
-            var text = node.text;
-            node.lazyUrl = '/${text}'; // must be set here or when the tree is initialised
+            textOfNode = node.text;
+            //getPathToThisNode(nodes, node.id);
+            node.lazyUrl = '/'+ textOfNode; // must be set here or when the tree is initialised
             node.lazyUrlJson = JSON.stringify({ text: counter }); // any json object here (optional)
             //node.lazyUrlJson = "{ text: " + counter + " } "; // IE 6/7 compatible
         }
 
+        //function getPathToThisNode(nodes, idNode) {
+          //  for(var i = 0, size = nodes.length; i < size ; i++){
+            //    if (nodes[i].id === idNode){
+              //      var node = nodes[i].text;
+                //    node.toString();
+               // }
+           // }
+        //}
+
         var easyTree = $('#demo_menu').easytree({
             openLazyNode: openLazyNode
         });
-
     </script>
     </body>
     </html>

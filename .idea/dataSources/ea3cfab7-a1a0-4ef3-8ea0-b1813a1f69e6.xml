@@ -73,8 +73,7 @@
     <schema id="16" parent="2" name="public">
       <ObjectId>2200</ObjectId>
       <Comment>standard public schema</Comment>
-      <IntrospectionTimestamp>2018-07-22.13:30:15.977</IntrospectionTimestamp>
-      <IntrospectionStateNumber>563</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2018-07-25.22:10:22.203</IntrospectionTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -120,63 +119,5 @@
       <HandlerId>335</HandlerId>
       <Type>index</Type>
     </access-method>
-    <sequence id="23" parent="16" name="folder_id_seq">
-      <ObjectId>16404</ObjectId>
-      <StateNumber>561</StateNumber>
-      <SequenceIdentity>1..2147483647</SequenceIdentity>
-      <BelongsToColumn>1</BelongsToColumn>
-      <CacheSize>1</CacheSize>
-      <DataType>integer</DataType>
-    </sequence>
-    <table id="24" parent="16" name="folder">
-      <ObjectId>16406</ObjectId>
-      <StateNumber>561</StateNumber>
-    </table>
-    <column id="25" parent="24" name="id">
-      <Position>1</Position>
-      <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>561</StateNumber>
-      <DefaultExpression>nextval(&apos;folder_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>23</TypeId>
-      <SequenceName>folder_id_seq</SequenceName>
-    </column>
-    <column id="26" parent="24" name="name_folder">
-      <Position>2</Position>
-      <DataType>text|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>562</StateNumber>
-      <TypeId>25</TypeId>
-    </column>
-    <column id="27" parent="24" name="id_parent">
-      <Position>3</Position>
-      <DataType>integer|0s</DataType>
-      <StateNumber>563</StateNumber>
-      <TypeId>23</TypeId>
-    </column>
-    <index id="28" parent="24" name="pk_folder">
-      <ObjectId>16413</ObjectId>
-      <ColNames>id</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <index id="29" parent="24" name="idx_folder__id_parent">
-      <ObjectId>16415</ObjectId>
-      <ColNames>id_parent</ColNames>
-    </index>
-    <key id="30" parent="24" name="pk_folder">
-      <ObjectId>16414</ObjectId>
-      <ColNames>id</ColNames>
-      <UnderlyingIndexName>pk_folder</UnderlyingIndexName>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="31" parent="24" name="fk_folder__id_parent">
-      <ObjectId>16416</ObjectId>
-      <ColNames>id_parent</ColNames>
-      <RefTableId>16406</RefTableId>
-      <RefColPositions>1</RefColPositions>
-      <RefTableName>folder</RefTableName>
-      <RefKeyName>pk_folder</RefKeyName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
   </database-model>
 </dataSource>

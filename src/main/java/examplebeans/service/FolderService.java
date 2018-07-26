@@ -13,7 +13,7 @@ public class FolderService {
     private FolderRepository folderRepository;
 
     public List<Folder> getAllForFolder(String folder){
-        String basicFolder = "D:\\java_projects\\trainingCoreSkills\\src\\main\\resources\\examplefolders";
-        return folderRepository.getAllDirectoriesFromFolder(folder == null ? basicFolder : folder);
+        String basicFolder = "D:\\java_projects\\folders\\src\\main\\resources\\examplefolders";
+        return folderRepository.getAllDirectoriesFromFolder(folder == null ? basicFolder : basicFolder+"\\"+folder);
     }
 }
