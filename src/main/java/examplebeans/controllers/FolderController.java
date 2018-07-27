@@ -39,7 +39,7 @@ public class FolderController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/{text}")
     public String getNextFolder(@PathVariable() String text) {
-        String folder1 = text.replaceAll("-", "\\\\");
+        String folder1 = text.replaceAll("-", "\\\\").replaceAll(" ", "");
         System.out.println(folder1);
         List<Folder> allForFolder = folderService.getAllForFolder(folder1);
         if (allForFolder != null) {

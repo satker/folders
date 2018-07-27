@@ -9,10 +9,8 @@
     <list default="true" id="8894434d-3c6b-4a56-89a9-dbe5ba3ff8f7" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/examplebeans/controllers/FolderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/examplebeans/controllers/FolderController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/examplebeans/service/FolderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/examplebeans/service/FolderService.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -105,7 +103,7 @@
       <file leaf-file-name="FolderService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
+            <state relative-caret-position="289">
               <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -114,11 +112,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FolderController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FolderController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="48" column="54" selection-start-line="48" selection-start-column="54" selection-end-line="48" selection-end-column="54" />
+            <state relative-caret-position="697">
+              <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -135,15 +133,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="controller-servlet.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/controller-servlet.xml">
           <provider selected="true" editor-type-id="text-editor">
@@ -153,14 +142,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="50" column="45" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="45" />
+            <state relative-caret-position="136">
+              <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
               <folding>
-                <marker date="1532631252274" expanded="true" signature="1372:1516" ph="..." />
+                <marker date="1532672942906" expanded="true" signature="1383:1527" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jspdirectives2_1.xsd" pinned="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/plugins/jsp/lib/jsp-impl.jar!/standardSchemas/jspdirectives2_1.xsd">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="155" column="8" selection-start-line="155" selection-start-column="8" selection-end-line="155" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -238,8 +236,8 @@
         <option value="$PROJECT_DIR$/src/main/java/examplebeans/repository/FolderRepository.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/controller-servlet.xml" />
         <option value="$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java" />
       </list>
     </option>
   </component>
@@ -793,7 +791,7 @@
       <workItem from="1532585072826" duration="5961000" />
       <workItem from="1532591127545" duration="687000" />
       <workItem from="1532625397342" duration="7212000" />
-      <workItem from="1532672080946" duration="602000" />
+      <workItem from="1532672080946" duration="1836000" />
     </task>
     <task id="LOCAL-00001" summary="added mapping for moving on tree">
       <created>1532507476469</created>
@@ -802,11 +800,18 @@
       <option name="project" value="LOCAL" />
       <updated>1532507476469</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added fixed problem in controller with nullPointer">
+      <created>1532672912937</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1532672912937</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79669000" />
+    <option name="totallyTimeSpent" value="80903000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -818,7 +823,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -910,7 +915,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added mapping for moving on tree" />
-    <option name="LAST_COMMIT_MESSAGE" value="added mapping for moving on tree" />
+    <MESSAGE value="added fixed problem in controller with nullPointer" />
+    <option name="LAST_COMMIT_MESSAGE" value="added fixed problem in controller with nullPointer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -976,7 +982,7 @@
           <option name="timeStamp" value="120" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="121" />
+      <option name="time" value="123" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
@@ -1013,7 +1019,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/beans/A.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/beans/B.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/src.zip!/java/util/Optional.java" />
@@ -1159,16 +1164,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.7.RELEASE/spring-web-5.0.7.RELEASE.jar!/org/springframework/web/bind/annotation/PathVariable.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1176,22 +1171,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/service/FolderService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="48" column="54" selection-start-line="48" selection-start-column="54" selection-end-line="48" selection-end-column="54" />
+        <state relative-caret-position="289">
+          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/jsp/lib/jsp-impl.jar!/standardSchemas/jspdirectives2_1.xsd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="155" column="8" selection-start-line="155" selection-start-column="8" selection-end-line="155" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="50" column="45" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="45" />
+        <state relative-caret-position="136">
+          <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
           <folding>
-            <marker date="1532631252274" expanded="true" signature="1372:1516" ph="..." />
+            <marker date="1532672942906" expanded="true" signature="1383:1527" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/examplebeans/controllers/FolderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
