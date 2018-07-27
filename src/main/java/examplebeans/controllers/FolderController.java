@@ -23,8 +23,6 @@ public class FolderController {
 
     private FolderService folderService;
 
-    private int count = 1;
-
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public ModelAndView getHello() {
         List<Folder> allForFolder = folderService.getAllForFolder(null);
@@ -36,21 +34,26 @@ public class FolderController {
                 collect(Collectors.toList());
         ModelAndView model = new ModelAndView("WEB-INF/jsp/index.jsp");
         model.addObject("list", collect);
-        System.out.println(count++);
         return model;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{text}")
-    public String getNextFolder(@PathVariable String text) {
-        List<Folder> allForFolder = folderService.getAllForFolder(text);
-        String json = allForFolder.stream().
-                map(Folder::getDirectory).
-                map(File::getName).
-                map(folder -> folder.split("\\\\")).
-                map(flatFolder -> flatFolder[flatFolder.length - 1]).
-                map(folder -> jsonPart1.concat(folder).concat(jsonPart2)).
-                collect(Collectors.joining(", "));
-        return "[" + json + "]";
+    public String getNextFolder(@PathVariable() String text) {
+        String folder1 = text.replaceAll("-", "\\\\");
+        System.out.println(folder1);
+        List<Folder> allForFolder = folderService.getAllForFolder(folder1);
+        if (allForFolder != null) {
+            String json = allForFolder.stream().
+                    map(Folder::getDirectory).
+                    map(File::getName).
+                    map(folder -> folder.split("\\\\")).
+                    map(flatFolder -> flatFolder[flatFolder.length - 1]).
+                    map(folder -> jsonPart1.concat(folder).concat(jsonPart2)).
+                    collect(Collectors.joining(", "));
+            return "[" + json + "]";
+        } else {
+            return "";
+        }
     }
 
     String jsonPart1 = "{\"isActive\":false," +

@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -30,50 +29,33 @@
         </c:if>
     </div>
     <script>
-        var counter = 0;
         var currentNode = null;
-        var allNodes = null;
+        //var allNodes = null;
 
         function openLazyNode(event, nodes, node, hasChildren) {
-            if(allNodes != null){
-              nodes = allNodes;
-            }
+            // if (allNodes != null) {
+            //     nodes = allNodes;
+            // }
             if (hasChildren) { // don't call ajax if lazy node already has children
                 return false;
             }
-            var textOfNode = node.text;
-            if(currentNode != null){
-              if (currentNode.hasChildren){
+            if (currentNode != null) {
                 var childrenOfCurrentNode = currentNode.children;
-                iteratesNodesAndChangeIt(nodes, childrenOfCurrentNode);
-              }
-              findChangesNode(nodes, node, textOfNode);
+                iteratesNodesAndChangeIt(nodes, childrenOfCurrentNode, node);
             }
-            node.lazyUrl = '/'+ textOfNode; // must be set here or when the tree is initialised
-            currentNode = textOfNode;
-            allNodes = nodes;
-       }
+            node.lazyUrl = '/' + node.text; // must be set here or when the tree is initialised
+            currentNode = node;
+            //allNodes = nodes;
+        }
 
-        function iteratesNodesAndChangeIt(nodes, childrenOfCurrentNode) {
-                 for(var i = 0, size = childrenOfCurrentNode.length; i < size ; i++){
-                                     changeCurrentNodes(nodes, childrenOfCurrentNode[i]);
-                     }
-                }
-
-                function findChangesNode(nodes, node, textOfNode) {
-                            for(var i = 0, size = nodes.length; i < size ; i++){
-                                if (nodes[i].id === node.id){
-                                    textOfNode = nodes[i].text;
-                                }
-                            }
-                        }
-
-        function changeCurrentNodes(nodes, node) {
-            for(var i = 0, size = nodes.length; i < size ; i++){
-                if (nodes[i].id === node.id){
-                    nodes[i] = currentNode + '-' + node.text;
+        function iteratesNodesAndChangeIt(nodes, childrenOfCurrentNode, node) {
+            for (var i = 0, size = childrenOfCurrentNode.length; i < size; i++) {
+                childrenOfCurrentNode[i].text = currentNode.text + '-' + childrenOfCurrentNode[i].text;
+                if (node.id === childrenOfCurrentNode[i].id) {
+                    node.text = childrenOfCurrentNode[i].text;
                 }
             }
+
         }
 
         var easyTree = $('#demo_menu').easytree({
