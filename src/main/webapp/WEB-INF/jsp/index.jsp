@@ -27,10 +27,15 @@
             </ul>
         </c:if>
     </div>
-    <div style="float:right; width:350px;">
-        <div id="divRejectAll" class="easytree-droppable easytree-reject"
-             style="float: right; width: 80px; height: 80px; border: 1px solid red; margin: 3px;">
-            <p>Trash</p>
+    <div class="box" style="float:left; width:335px; margin-left:30px">
+        <div class="box_content">
+            <input type="text" value="New Node" style="width:200px" id="nodeText" /> Node Text
+            <br /><br />
+            <select id="lstNodes"></select>
+            <br /><br />
+            <button onclick="addNode(); return false;">Add</button>
+            <button onclick="removeNodeX(); return false;">Remove</button>
+            <button onclick="edit(); return false;">Edit node name</button><br />
         </div>
     </div>
     <script type="text/javascript">
@@ -41,8 +46,11 @@
         var easyTree = $('#demo_menu').easytree({
             enableDnd: true,
             dropped: moveNode,
-            dropping: deleteNode,
             openLazyNode: openLazyNode
+        });
+
+        $(document).ready(function () {
+            loadSelectBox();
         });
 
         function openLazyNode(event, nodes, node, hasChildren) {
@@ -60,6 +68,8 @@
             node.lazyUrl = '/' + allNodes[node.id];
             currentNode = node;
             firstIteration = 1;
+            loadSelectBox();
+
         }
 
         function iteratesNodesAndChangeIt(childrenOfCurrentNode) {
@@ -74,64 +84,92 @@
         }
 
         function moveNode(event, nodes, isSourceNode, source, isTargetNode, target) {
+            //openLazyNode(easyTree.getAllNodes(), target, true);
             iteratesNodesAndChangeIt(currentNode.children);
-            if (isSourceNode && !isTargetNode) {
+
                 xhr.open("PUT", '/' + allNodes[source.id] + '/' + allNodes[target.id], true);
                 xhr.send();
                 easyTree.addNode(source, target.id);
                 easyTree.removeNode(source.id);
                 easyTree.rebuildTree();
-            }
+
         }
 
-        function deleteNode(event, nodes, isSourceNode, source, isTargetNode, target, canDrop) {
-            //iteratesNodesAndChangeIt(currentNode.children);
-            if (isSourceNode && !canDrop && target && (!isTargetNode && target.id == 'divRejectAll')) {
-                xhr.open("DELETE", '/' + allNodes[source.id], true);
-                xhr.send();
-                easyTree.removeNode(source.id);
-                easyTree.rebuildTree();
-            }
-        }
-
-        function addNode(name) {
-            var nodes;
-            if (Object.keys(allNodes).length === 0){
-              nodes = easyTree.getAllNodes();
-            } else {
-              nodes = allNodes;
-            }
-            var node;
-            for (var i = 0, size = Object.keys(nodes).length; i < size; i++) {
-                var interMass = nodes[i].text.split('->');
-                var nameNode = interMass[interMass.length - 1];
-                if (name === nameNode) {
-                    node = easyTree.getNode(nodes[i].id);
-                }
-            }
-            var result = prompt("Enter folder name");
-
+        function addNode() {
             var sourceNode = {};
-            sourceNode.text = result;
+            sourceNode.text = $('#nodeText').val();
             sourceNode.isFolder = true;
+            var targetId = $('#lstNodes :selected').val();
+            var node = easyTree.getNode(targetId);
 
-            easyTree.addNode(sourceNode, node.id);
+            xhr.open("PUT", '/' + allNodes[node.id], true);
+            xhr.send();
+
+            easyTree.addNode(sourceNode, targetId);
             easyTree.rebuildTree();
-            for (var i = 0, size = nodes.length; i < size; i++) {
-                if (name === nodes[i].text)
-                 allNodes[nodes[i].id] = nodes[i].text;
+            loadSelectBox();
+        }
+
+        // we have to reload selected box at the end of each function to ensure it is always up to date
+        function loadSelectBox() {
+            var select = $('#lstNodes')[0];
+            var currentlySelected = $('#lstNodes :selected').val();
+
+            select.length = 0; // clear select box
+
+            var root = new Option();
+            root.text = 'Root';
+            root.value = '';
+            select.add(root);
+
+            var allNodes = easyTree.getAllNodes();
+            addOptions(allNodes, select, '-', currentlySelected);
+        }
+
+        function addOptions(nodes, select, prefix, currentlySelected) {
+            var i = 0;
+            for (i = 0; i < nodes.length; i++) {
+
+                var option = new Option();
+                option.text = prefix + ' ' + nodes[i].text;
+                option.value = nodes[i].id;
+                option.selected = currentlySelected == nodes[i].id;
+                select.add(option);
+
+                if (nodes[i].children && nodes[i].children.length > 0) {
+                    addOptions(nodes[i].children, select, prefix + '-', currentlySelected);
+                }
             }
         }
 
         function removeNodeX() {
             var currentlySelected = $('#lstNodes :selected').val();
-            var node = easytree.getNode(currentlySelected);
+            var node = easyTree.getNode(currentlySelected);
             if (!node) {
                 return;
             }
 
-            easytree.removeNode(node.id);
-            easytree.rebuildTree();
+            xhr.open("DELETE", '/' + allNodes[node.id], true);
+            xhr.send();
+
+            easyTree.removeNode(node.id);
+            easyTree.rebuildTree();
+            loadSelectBox();
+        }
+
+        function edit() {
+            var nameNode = $('#nodeText').val();
+            var currentlySelected = $('#lstNodes :selected').val();
+            var node = easyTree.getNode(currentlySelected);
+            if (!node) {
+                return;
+            }
+
+            xhr.open("POST", 'edit/' + allNodes[node.id], true);
+            xhr.send();
+
+            node.text = nameNode;
+            easyTree.rebuildTree();
             loadSelectBox();
         }
     </script>
