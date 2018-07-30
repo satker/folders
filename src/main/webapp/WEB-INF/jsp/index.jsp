@@ -6,7 +6,7 @@
   Time: 13:13
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <doctype html>
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,54 +14,144 @@
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="http://www.easyjstree.com/Scripts/jquery.easytree.min.js"></script>
-
     </head>
     <body>
     <div id="demo_menu" style="float:left; width:250px;">
         <c:if test="${not empty list}">
-
             <ul>
                 <c:forEach var="listValue" items="${list}">
-                    <li class="isLazy isFolder">${listValue}</li>
+                    <li class="isLazy isFolder" title="Bookmarks">
+                        <a href="javaScript:{addNode('${listValue}')}"> ${listValue}</a>
+                    </li>
                 </c:forEach>
             </ul>
-
         </c:if>
     </div>
-    <script>
+    <div style="float:right; width:350px;">
+        <div id="divRejectAll" class="easytree-droppable easytree-reject"
+             style="float: right; width: 80px; height: 80px; border: 1px solid red; margin: 3px;">
+            <p>Trash</p>
+        </div>
+    </div>
+    <script type="text/javascript">
         var currentNode = null;
-        //var allNodes = null;
+        var allNodes = {};
+        var firstIteration = 0;
+        var xhr = new XMLHttpRequest();
+        var easyTree = $('#demo_menu').easytree({
+            enableDnd: true,
+            dropped: moveNode,
+            dropping: deleteNode,
+            openLazyNode: openLazyNode
+        });
 
         function openLazyNode(event, nodes, node, hasChildren) {
-            // if (allNodes != null) {
-            //     nodes = allNodes;
-            // }
             if (hasChildren) { // don't call ajax if lazy node already has children
                 return false;
             }
-            if (currentNode != null) {
-                var childrenOfCurrentNode = currentNode.children;
-                iteratesNodesAndChangeIt(nodes, childrenOfCurrentNode, node);
-            }
-            node.lazyUrl = '/' + node.text; // must be set here or when the tree is initialised
-            currentNode = node;
-            //allNodes = nodes;
-        }
-
-        function iteratesNodesAndChangeIt(nodes, childrenOfCurrentNode, node) {
-            for (var i = 0, size = childrenOfCurrentNode.length; i < size; i++) {
-                childrenOfCurrentNode[i].text = currentNode.text + '-' + childrenOfCurrentNode[i].text;
-                if (node.id === childrenOfCurrentNode[i].id) {
-                    node.text = childrenOfCurrentNode[i].text;
+            if (firstIteration !== 1) {
+                for (var i = 0, size = nodes.length; i < size; i++) {
+                    allNodes[nodes[i].id] = nodes[i].text;
                 }
             }
-
+            if (currentNode != null) {
+                iteratesNodesAndChangeIt(currentNode.children);
+            }
+            node.lazyUrl = '/' + allNodes[node.id];
+            currentNode = node;
+            firstIteration = 1;
         }
 
-        var easyTree = $('#demo_menu').easytree({
-            openLazyNode: openLazyNode
-        });
+        function iteratesNodesAndChangeIt(childrenOfCurrentNode) {
+            var prefix = allNodes[currentNode.id];
+            if (prefix === undefined) {
+                prefix = currentNode.text;
+            }
+            for (var i = 0, size = childrenOfCurrentNode.length; i < size; i++) {
+                allNodes[childrenOfCurrentNode[i].id] =
+                    prefix + '->' + childrenOfCurrentNode[i].text;
+            }
+        }
+
+        function moveNode(event, nodes, isSourceNode, source, isTargetNode, target) {
+            iteratesNodesAndChangeIt(currentNode.children);
+            if (isSourceNode && !isTargetNode) {
+                xhr.open("PUT", '/' + allNodes[source.id] + '/' + allNodes[target.id], true);
+                xhr.send();
+                easyTree.addNode(source, target.id);
+                easyTree.removeNode(source.id);
+                easyTree.rebuildTree();
+            }
+        }
+
+        function deleteNode(event, nodes, isSourceNode, source, isTargetNode, target, canDrop) {
+            //iteratesNodesAndChangeIt(currentNode.children);
+            if (isSourceNode && !canDrop && target && (!isTargetNode && target.id == 'divRejectAll')) {
+                xhr.open("DELETE", '/' + allNodes[source.id], true);
+                xhr.send();
+                easyTree.removeNode(source.id);
+                easyTree.rebuildTree();
+            }
+        }
+
+        function addNode(name) {
+            var node;
+            for (var i = 0, size = allNodes.length; i < size; i++) {
+                var interMass = allNodes[i].text.split('->');
+                var nameNode = interMass[interMass.length - 1];
+                if (name === nameNode) {
+                    document.write(name);
+                    node = easyTree.getNode(allNodes[i].id);
+                    document.write(node.text);
+                }
+            }
+            //findNodeByName (name, node);
+            //document.write(node.text);
+            // var sourceNode = {};
+            // sourceNode.text = $('#nodeText').val();
+            // sourceNode.isFolder = true;
+            // var targetId = node.id;
+            // document.write(targetId);
+            //
+            // easytree.addNode(sourceNode, targetId);
+            // easytree.rebuildTree();
+        }
+
+        function findNodeByName(name, node) {
+            for (var i = 0, size = allNodes.length; i < size; i++) {
+                var interMass = allNodes[i].text.split('->');
+                var nameNode = interMass[interMass.length - 1];
+                if (name === nameNode) {
+                    document.write(name);
+                    node = easyTree.getNode(allNodes[i].id);
+                    document.write(node.text);
+                }
+            }
+        }
+
+        function removeNodeX() {
+            var currentlySelected = $('#lstNodes :selected').val();
+            var node = easytree.getNode(currentlySelected);
+            if (!node) {
+                return;
+            }
+
+            easytree.removeNode(node.id);
+            easytree.rebuildTree();
+            loadSelectBox();
+        }
     </script>
+    <style>
+        ul li:after {
+            display: block;
+            height: 100px;
+            line-height: 100px;
+        }
+
+        ui li img {
+            vertical-align: middle;
+        }
+    </style>
     </body>
     </html>
 </doctype>
