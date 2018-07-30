@@ -21,7 +21,7 @@
             <ul>
                 <c:forEach var="listValue" items="${list}">
                     <li class="isLazy isFolder" title="Bookmarks">
-                        <a href="javaScript:{addNode('${listValue}')}"> ${listValue}</a>
+                        ${listValue}
                     </li>
                 </c:forEach>
             </ul>
@@ -49,7 +49,7 @@
             if (hasChildren) { // don't call ajax if lazy node already has children
                 return false;
             }
-            if (firstIteration !== 1) {
+            if (firstIteration === 0) {
                 for (var i = 0, size = nodes.length; i < size; i++) {
                     allNodes[nodes[i].id] = nodes[i].text;
                 }
@@ -95,37 +95,31 @@
         }
 
         function addNode(name) {
+            var nodes;
+            if (Object.keys(allNodes).length === 0){
+              nodes = easyTree.getAllNodes();
+            } else {
+              nodes = allNodes;
+            }
             var node;
-            for (var i = 0, size = allNodes.length; i < size; i++) {
-                var interMass = allNodes[i].text.split('->');
+            for (var i = 0, size = Object.keys(nodes).length; i < size; i++) {
+                var interMass = nodes[i].text.split('->');
                 var nameNode = interMass[interMass.length - 1];
                 if (name === nameNode) {
-                    document.write(name);
-                    node = easyTree.getNode(allNodes[i].id);
-                    document.write(node.text);
+                    node = easyTree.getNode(nodes[i].id);
                 }
             }
-            //findNodeByName (name, node);
-            //document.write(node.text);
-            // var sourceNode = {};
-            // sourceNode.text = $('#nodeText').val();
-            // sourceNode.isFolder = true;
-            // var targetId = node.id;
-            // document.write(targetId);
-            //
-            // easytree.addNode(sourceNode, targetId);
-            // easytree.rebuildTree();
-        }
+            var result = prompt("Enter folder name");
 
-        function findNodeByName(name, node) {
-            for (var i = 0, size = allNodes.length; i < size; i++) {
-                var interMass = allNodes[i].text.split('->');
-                var nameNode = interMass[interMass.length - 1];
-                if (name === nameNode) {
-                    document.write(name);
-                    node = easyTree.getNode(allNodes[i].id);
-                    document.write(node.text);
-                }
+            var sourceNode = {};
+            sourceNode.text = result;
+            sourceNode.isFolder = true;
+
+            easyTree.addNode(sourceNode, node.id);
+            easyTree.rebuildTree();
+            for (var i = 0, size = nodes.length; i < size; i++) {
+                if (name === nodes[i].text)
+                 allNodes[nodes[i].id] = nodes[i].text;
             }
         }
 
