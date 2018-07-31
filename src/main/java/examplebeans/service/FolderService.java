@@ -66,8 +66,10 @@ public class FolderService {
     }
 
 
-    public void editFolderName(String folderForEdit){
-        String directoryRemovingNode = getDirectoryFolder(folderForEdit);
+    public void editFolderName(String oldFolder, String newFolder){
+        String directoryOldFolder = getDirectoryFolder(oldFolder);
+        String directoryNewFOlder = getDirectoryFolder(newFolder);
+        System.out.println(directoryOldFolder + " rename to " + directoryNewFOlder);
     }
 
     public void addNewNode(String newFolder){

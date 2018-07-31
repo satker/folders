@@ -47,9 +47,10 @@ public class FolderController {
         folderService.moveNode(from, to);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/edit/{folder}")
-    public void editFolderName(@PathVariable() String folder) {
-        folderService.editFolderName(folder);
+    @RequestMapping(method = RequestMethod.POST, value = "/{oldFolder}/{newFolder}")
+    public void editFolderName(@PathVariable() String oldFolder,
+                               @PathVariable() String newFolder) {
+        folderService.editFolderName(oldFolder, newFolder);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{folder}")

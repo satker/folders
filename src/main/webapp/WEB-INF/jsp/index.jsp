@@ -161,11 +161,16 @@
             var nameNode = $('#nodeText').val();
             var currentlySelected = $('#lstNodes :selected').val();
             var node = easyTree.getNode(currentlySelected);
+            document.write(currentlySelected);
             if (!node) {
                 return;
             }
+             var prefix = allNodes[currentNode.id];
+             if (prefix === undefined) {
+                 prefix = node.text;
+             }
 
-            xhr.open("POST", 'edit/' + allNodes[node.id], true);
+            xhr.open("POST", prefix + '/' + nameNode , true);
             xhr.send();
 
             node.text = nameNode;
