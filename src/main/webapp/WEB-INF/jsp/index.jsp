@@ -21,7 +21,7 @@
             <ul>
                 <c:forEach var="listValue" items="${list}">
                     <li class="isLazy isFolder" title="Bookmarks">
-                        ${listValue}
+                            ${listValue}
                     </li>
                 </c:forEach>
             </ul>
@@ -30,13 +30,14 @@
     </div>
     <div class="box" style="float:left; width:335px; margin-left:30px">
         <div class="box_content">
-            <input type="text" value="New Node" style="width:200px" id="nodeText" /> Node Text
-            <br /><br />
+            <input type="text" value="New Node" style="width:200px" id="nodeText"/> Node Text
+            <br/><br/>
             <select id="lstNodes"></select>
-            <br /><br />
+            <br/><br/>
             <button onclick="addNode(); return false;">Add</button>
             <button onclick="removeNodeX(); return false;">Remove</button>
-            <button onclick="edit(); return false;">Edit node name</button><br />
+            <button onclick="edit(); return false;">Edit node name</button>
+            <br/>
         </div>
     </div>
     <script type="text/javascript">
@@ -70,7 +71,6 @@
             currentNode = node;
             firstIteration = 1;
             loadSelectBox();
-
         }
 
         function iteratesNodesAndChangeIt(childrenOfCurrentNode) {
@@ -87,12 +87,11 @@
         function moveNode(event, nodes, isSourceNode, source, isTargetNode, target) {
             //openLazyNode(easyTree.getAllNodes(), target, true);
             iteratesNodesAndChangeIt(currentNode.children);
-
-                xhr.open("PUT", '/' + allNodes[source.id] + '/' + allNodes[target.id], true);
-                xhr.send();
-                easyTree.addNode(source, target.id);
-                easyTree.removeNode(source.id);
-                easyTree.rebuildTree();
+            xhr.open("PUT", '/' + allNodes[source.id] + '/' + allNodes[target.id], true);
+            xhr.send();
+            easyTree.addNode(source, target.id);
+            easyTree.removeNode(source.id);
+            easyTree.rebuildTree();
 
         }
 
@@ -103,7 +102,7 @@
             var targetId = $('#lstNodes :selected').val();
             var node = easyTree.getNode(targetId);
 
-            xhr.open("PUT", '/' + allNodes[node.id], true);
+            xhr.open("PUT", '/' + allNodes[node.id] + "->" + sourceNode.text, true);
             xhr.send();
 
             easyTree.addNode(sourceNode, targetId);
@@ -113,6 +112,9 @@
 
         // we have to reload selected box at the end of each function to ensure it is always up to date
         function loadSelectBox() {
+            if (currentNode != null) {
+                iteratesNodesAndChangeIt(currentNode.children);
+            }
             var select = $('#lstNodes')[0];
             var currentlySelected = $('#lstNodes :selected').val();
 
@@ -159,19 +161,25 @@
         }
 
         function edit() {
-            iteratesNodesAndChangeIt(currentNode.children);
             var nameNode = $('#nodeText').val();
             var currentlySelected = $('#lstNodes :selected').val();
             var node = easyTree.getNode(currentlySelected);
             if (!node) {
                 return;
             }
-             var prefix = allNodes[node.id];
-             if (prefix === undefined) {
-                 prefix = node.text;
-             }
+            var prefix = allNodes[node.id];
+            if (prefix === undefined) {
+                prefix = node.text;
+            }
 
-            xhr.open("POST", prefix + '/' + nameNode , true);
+            var resultDirectory = "";
+            var strings = prefix.split("->");
+            strings[strings.length - 1] = "";
+            for (var i = 0; i < strings.length; i++) {
+                resultDirectory = resultDirectory + "->" + strings[i];
+            }
+
+            xhr.open("POST", prefix + '/' + resultDirectory + nameNode, true);
             xhr.send();
 
             node.text = nameNode;

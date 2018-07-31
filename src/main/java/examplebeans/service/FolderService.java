@@ -3,6 +3,11 @@ package examplebeans.service;
 import examplebeans.dao.Folder;
 import examplebeans.repository.FolderRepository;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.h2.store.fs.FileUtils;
@@ -45,7 +50,7 @@ public class FolderService {
   }
 
   private String getDirectoryFolder(String folder) {
-    String basicFolder = "C:\\Users\\Artem_Kunats\\IdeaProjects\\folders\\src\\main\\resources";
+    String basicFolder = "D:\\java_projects\\folders\\src\\main\\resources\\examplefolders";
     return folder == null ? basicFolder : basicFolder + "\\" + getDirectoryOfFolder(folder);
   }
 
@@ -94,6 +99,7 @@ public class FolderService {
     String directoryFolderFrom = getDirectoryFolder(from);
     String directoryFolderTo = getDirectoryFolder(to);
     FileUtils.move(directoryFolderFrom, directoryFolderTo);
+    System.out.println(directoryFolderFrom + " moved to " + directoryFolderTo);
   }
 
 
@@ -102,14 +108,19 @@ public class FolderService {
     String directoryNewFOlder = getDirectoryFolder(newFolder);
     File oldDirectory = new File(directoryOldFolder);
     File newDirectory = new File(directoryNewFOlder);
-    System.out.println(oldDirectory+ " rename to "+newDirectory);
-    System.out.println(oldDirectory.renameTo(newDirectory));
+
+    System.out.println(oldDirectory+ " rename to "+newDirectory + " result: " + oldDirectory.renameTo(newDirectory));
 
   }
 
   public void addNewNode(String newFolder) {
     String directoryFolderForAdd = getDirectoryFolder(newFolder);
-    boolean mkdirs = new File(directoryFolderForAdd).mkdirs();
-    System.out.println(mkdirs);
+    Path pathForAdd = Paths.get(directoryFolderForAdd);
+    try {
+      Files.createDirectories(pathForAdd);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
 }
