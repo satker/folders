@@ -27,6 +27,7 @@
             </ul>
         </c:if>
     </div>
+    </div>
     <div class="box" style="float:left; width:335px; margin-left:30px">
         <div class="box_content">
             <input type="text" value="New Node" style="width:200px" id="nodeText" /> Node Text
@@ -158,14 +159,14 @@
         }
 
         function edit() {
+            iteratesNodesAndChangeIt(currentNode.children);
             var nameNode = $('#nodeText').val();
             var currentlySelected = $('#lstNodes :selected').val();
             var node = easyTree.getNode(currentlySelected);
-            document.write(currentlySelected);
             if (!node) {
                 return;
             }
-             var prefix = allNodes[currentNode.id];
+             var prefix = allNodes[node.id];
              if (prefix === undefined) {
                  prefix = node.text;
              }
