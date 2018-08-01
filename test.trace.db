@@ -1,0 +1,73 @@
+2018-08-01 10:08:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "FOLDERS" не найдена
+Table "FOLDERS" not found; SQL statement:
+ALTER TABLE folders DROP CONSTRAINT fk_folder__id_parent [42102-197]
+2018-08-01 10:20:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "FOLDER" уже существует
+Table "FOLDER" already exists; SQL statement:
+CREATE TABLE folder (  id INTEGER PRIMARY KEY AUTO_INCREMENT, name_folder VARCHAR(255) NOT NULL,  id_parent INTEGER); CREATE INDEX idx_folder__id_parent ON folder (id_parent);ALTER TABLE folder ADD CONSTRAINT fk_folder__id_parent FOREIGN KEY (id_parent) REFERENCES folder (id) [42101-197]
+2018-08-01 10:22:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Таблица "FOLDERS" не найдена
+Table "FOLDERS" not found; SQL statement:
+ALTER TABLE folders DROP CONSTRAINT fk_folder__id_parent [42102-197]
+2018-08-01 10:22:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Индекс "IDX_FOLDER__ID_PARENT" уже существует
+Index "IDX_FOLDER__ID_PARENT" already exists; SQL statement:
+ CREATE INDEX idx_folder__id_parent ON folder (id_parent);ALTER TABLE folder ADD CONSTRAINT fk_folder__id_parent FOREIGN KEY (id_parent) REFERENCES folder (id) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.command.CommandList.update(CommandList.java:42)
+	at org.h2.command.CommandList.executeRemaining(CommandList.java:36)
+	at org.h2.command.CommandList.update(CommandList.java:43)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:205)
+	at org.springframework.jdbc.core.JdbcTemplate$1ExecuteStatementCallback.doInStatement(JdbcTemplate.java:406)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:376)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:415)
+	at examplebeans.repository.FolderRepository.createTableIfNotExists(FolderRepository.java:83)
+	at examplebeans.repository.FolderRepository.isFolderPresentInDB(FolderRepository.java:35)
+	at examplebeans.service.FolderService.extractDataFromDBorFileSystem(FolderService.java:143)
+	at examplebeans.service.FolderService.getAllDirectoriesFromFolder(FolderService.java:133)
+	at examplebeans.service.FolderService.getAllForFolder(FolderService.java:54)
+	at examplebeans.controllers.FolderController.getFirstFolders(FolderController.java:25)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:209)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:136)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:877)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:783)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:991)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:974)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:866)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:621)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:851)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:728)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:502)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:953)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1041)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:603)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:310)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)

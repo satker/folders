@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class FolderController {
@@ -22,8 +23,8 @@ public class FolderController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public ModelAndView getFirstFolders() {
-        List<Folder> allForFolder = folderService.getAllForFolder(null);
-        List<String> collect = folderService.getStringCollectionFromFolder(allForFolder);
+        Set<Folder> allForFolder = folderService.getAllForFolder(null);
+        Set<String> collect = folderService.getStringCollectionFromFolder(allForFolder);
         ModelAndView model = new ModelAndView("WEB-INF/jsp/index.jsp");
         model.addObject("list", collect);
         return model;
@@ -31,7 +32,7 @@ public class FolderController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/{folder}")
     public String getNextFolders(@PathVariable() String folder) {
-        List<Folder> allForFolder = folderService.getAllForFolder(folder);
+        Set<Folder> allForFolder = folderService.getAllForFolder(folder);
         return folderService.getJSONChildesFromParentDirectory(allForFolder);
     }
 

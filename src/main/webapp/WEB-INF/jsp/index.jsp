@@ -65,37 +65,51 @@
                 }
             }
             if (currentNode != null) {
-                iteratesNodesAndChangeIt(currentNode.children);
+                iteratesNodesAndChangeIt(currentNode);
+
             }
+
             node.lazyUrl = '/' + allNodes[node.id];
+
             currentNode = node;
             firstIteration = 1;
             loadSelectBox();
         }
 
-        function iteratesNodesAndChangeIt(childrenOfCurrentNode) {
-            var prefix = allNodes[currentNode.id];
-            if (prefix === undefined) {
-                prefix = currentNode.text;
-            }
-            for (var i = 0, size = childrenOfCurrentNode.length; i < size; i++) {
-                allNodes[childrenOfCurrentNode[i].id] =
-                    prefix + '->' + childrenOfCurrentNode[i].text;
+        function iteratesNodesAndChangeIt(node) {
+            var childrenOfCurrentNode = node.children;
+            if (childrenOfCurrentNode !== null) {
+                var prefix = allNodes[node.id];
+                if (prefix === undefined) {
+                    prefix = node.text;
+                }
+                for (var i = 0, size = childrenOfCurrentNode.length; i < size; i++) {
+                    allNodes[childrenOfCurrentNode[i].id] =
+                        prefix + '->' + childrenOfCurrentNode[i].text;
+                }
             }
         }
 
         function moveNode(event, nodes, isSourceNode, source, isTargetNode, target) {
-            //openLazyNode(easyTree.getAllNodes(), target, true);
-            iteratesNodesAndChangeIt(currentNode.children);
+            iteratesNodesAndChangeIt(currentNode);
             xhr.open("PUT", '/' + allNodes[source.id] + '/' + allNodes[target.id], true);
+            document.write(allNodes[source.id] + " to " + allNodes[target.id]);
             xhr.send();
             easyTree.addNode(source, target.id);
+            var childrenWithMovingNode = easyTree.getNode(target.id).children;
+            for (var i = 0, size = childrenWithMovingNode.length; i < size; i++) {
+                if (childrenWithMovingNode[i].text === source.text){
+                    delete allNodes[source.id];
+                    allNodes[childrenWithMovingNode[i].id] = allNodes[target.id] + '->' + source.text;
+                }
+            }
             easyTree.removeNode(source.id);
             easyTree.rebuildTree();
 
         }
 
         function addNode() {
+            iteratesNodesAndChangeIt(currentNode);
             var sourceNode = {};
             sourceNode.text = $('#nodeText').val();
             sourceNode.isFolder = true;
@@ -112,9 +126,10 @@
 
         // we have to reload selected box at the end of each function to ensure it is always up to date
         function loadSelectBox() {
-            if (currentNode != null) {
-                iteratesNodesAndChangeIt(currentNode.children);
-            }
+            // if (currentNode != null) {
+            //     iteratesNodesAndChangeIt(currentNode.children);
+            // }
+            iteratesNodesAndChangeIt(currentNode);
             var select = $('#lstNodes')[0];
             var currentlySelected = $('#lstNodes :selected').val();
 
@@ -146,6 +161,7 @@
         }
 
         function removeNodeX() {
+            iteratesNodesAndChangeIt(currentNode);
             var currentlySelected = $('#lstNodes :selected').val();
             var node = easyTree.getNode(currentlySelected);
             if (!node) {
@@ -161,6 +177,7 @@
         }
 
         function edit() {
+            iteratesNodesAndChangeIt(currentNode);
             var nameNode = $('#nodeText').val();
             var currentlySelected = $('#lstNodes :selected').val();
             var node = easyTree.getNode(currentlySelected);

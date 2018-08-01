@@ -1,15 +1,16 @@
 package examplebeans.service;
 
 import examplebeans.dao.Folder;
-import examplebeans.repository.FolderRepository;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import examplebeans.repository.FolderRepository;
 import org.h2.store.fs.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class FolderService {
 
+  @Autowired
+  public void setFolderRepository(FolderRepository folderRepository) {
+    this.folderRepository = folderRepository;
+  }
+
   private FolderRepository folderRepository;
+
+  private boolean isASearchedFromFileSystem;
 
   private String jsonPart1 = "{\"isActive\":false," +
       "\"enableDnd\": true," +
@@ -39,14 +47,9 @@ public class FolderService {
       "\"uiIcon\":null," +
       "\"children\":null}";
 
-  @Autowired
-  public void setFolderRepository(FolderRepository folderRepository) {
-    this.folderRepository = folderRepository;
-  }
-
-  public List<Folder> getAllForFolder(String folder) {
+  public Set<Folder> getAllForFolder(String folder) {
     String directory = getDirectoryFolder(folder);
-    return folderRepository.getAllDirectoriesFromFolder(directory);
+    return getAllDirectoriesFromFolder(directory);
   }
 
   private String getDirectoryFolder(String folder) {
@@ -59,31 +62,25 @@ public class FolderService {
                  .replaceAll(" ", "");
   }
 
-  public List<String> getStringCollectionFromFolder(List<Folder> allForFolder) {
+  public Set<String> getStringCollectionFromFolder(Set<Folder> allForFolder) {
     return allForFolder.stream()
-                       .
-                           map(Folder::getDirectory)
-                       .
-                           map(File::getName)
-                       .
-                           map(folder -> folder.split("\\\\"))
-                       .
-                           map(flatFolder -> flatFolder[flatFolder.length - 1])
-                       .
-                           collect(Collectors.toList());
+                       .map(Folder::getDirectory)
+                       .map(File::getName)
+                       .map(folder -> folder.split("\\\\"))
+                       .map(flatFolder -> flatFolder[flatFolder.length - 1])
+                       .collect(Collectors.toSet());
   }
 
-  private String getJSONFromStringFolders(List<String> allForFolder) {
+  private String getJSONFromStringFolders(Set<String> allForFolder) {
     return "[" + allForFolder.stream()
                              .map(folder -> jsonPart1.concat(folder)
                                                      .concat(jsonPart2))
-                             .
-                                 collect(Collectors.joining(", ")) + "]";
+                             .collect(Collectors.joining(", ")) + "]";
   }
 
-  public String getJSONChildesFromParentDirectory(List<Folder> allForFolder) {
+  public String getJSONChildesFromParentDirectory(Set<Folder> allForFolder) {
     if (allForFolder != null) {
-      List<String> stringCollectionFromFolder = getStringCollectionFromFolder(allForFolder);
+      Set<String> stringCollectionFromFolder = getStringCollectionFromFolder(allForFolder);
       return getJSONFromStringFolders(stringCollectionFromFolder);
     } else {
       return "";
@@ -97,9 +94,15 @@ public class FolderService {
 
   public void moveNode(String from, String to) {
     String directoryFolderFrom = getDirectoryFolder(from);
-    String directoryFolderTo = getDirectoryFolder(to);
-    FileUtils.move(directoryFolderFrom, directoryFolderTo);
-    System.out.println(directoryFolderFrom + " moved to " + directoryFolderTo);
+    String[] split = from.replaceAll(" ", "").split("->");
+    String directoryFolderTo = getDirectoryFolder(to + "->" + split[split.length - 1]);
+    //FileUtils.move(directoryFolderFrom, directoryFolderTo);
+    try {
+      Files.move(Paths.get(directoryFolderFrom), Paths.get(directoryFolderTo));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    //System.out.println(directoryFolderFrom + " moved to " + directoryFolderTo);
   }
 
 
@@ -109,7 +112,7 @@ public class FolderService {
     File oldDirectory = new File(directoryOldFolder);
     File newDirectory = new File(directoryNewFOlder);
 
-    System.out.println(oldDirectory+ " rename to "+newDirectory + " result: " + oldDirectory.renameTo(newDirectory));
+    //System.out.println(oldDirectory+ " rename to "+newDirectory + " result: " + oldDirectory.renameTo(newDirectory));
 
   }
 
@@ -121,6 +124,49 @@ public class FolderService {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
 
+  public Set<Folder> getAllDirectoriesFromFolder(String directory) {
+        Set<Folder> result = new HashSet<>();
+        extractDataFromDBorFileSystem(directory, result);
+        if (result.size() != 0 && isASearchedFromFileSystem) {
+            folderRepository.writeAllFoundedDirectoriesIntoDB(result);
+        }
+        isASearchedFromFileSystem = false;
+        return result;
+    //return currentDirectories(directory);
+  }
+
+  private void extractDataFromDBorFileSystem(String directory, Set<Folder> result) {
+//    if (folderRepository.isFolderPresentInDB(directory)) {
+//      String sqlForChilds = folderRepository.extractSqlForChildFolders(directory);
+//      folderRepository.getChildFoldersFromDatabase(result, sqlForChilds);
+//    } else {
+      isASearchedFromFileSystem = true;
+      result.addAll(currentDirectories(directory));
+    //}
+  }
+
+  // Возвращает список директорий в папке
+  private List<Folder> currentDirectories(String path) {
+    List<Folder> result = null;
+
+    // Список файлов текущей директории
+    String[] currentFiles = new File(path).list();
+    if (currentFiles != null) {
+      result = Arrays.stream(currentFiles)
+              .map(fileOrDirectoryName ->
+                      getFileFromFullNameFileOrDirectory(path, fileOrDirectoryName))
+              .filter(File::isDirectory)
+              .map(directory -> Folder.builder().directory(new File(directory.getAbsolutePath())).build())
+              .collect(Collectors.toList());
+    }
+    return result;
+  }
+
+  private File getFileFromFullNameFileOrDirectory(String fileOrDirectoryPath,
+                                                  String fileOrDirectoryName) {
+    String path = fileOrDirectoryPath + "\\" + fileOrDirectoryName;
+    return new File(path);
   }
 }
