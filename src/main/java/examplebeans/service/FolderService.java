@@ -25,7 +25,7 @@ public class FolderService {
 
   private FolderRepository folderRepository;
 
-  private boolean isASearchedFromFileSystem;
+  private int countIterators = 0;
 
   private String jsonPart1 = "{\"isActive\":false," +
       "\"enableDnd\": true," +
@@ -53,7 +53,7 @@ public class FolderService {
   }
 
   private String getDirectoryFolder(String folder) {
-    String basicFolder = "D:\\java_projects\\folders\\src\\main\\resources\\examplefolders";
+    String basicFolder = "C:\\Users\\Artem_Kunats\\IdeaProjects\\folders\\src\\main\\resources";
     return folder == null ? basicFolder : basicFolder + "\\" + getDirectoryOfFolder(folder);
   }
 
@@ -96,13 +96,11 @@ public class FolderService {
     String directoryFolderFrom = getDirectoryFolder(from);
     String[] split = from.replaceAll(" ", "").split("->");
     String directoryFolderTo = getDirectoryFolder(to + "->" + split[split.length - 1]);
-    //FileUtils.move(directoryFolderFrom, directoryFolderTo);
     try {
       Files.move(Paths.get(directoryFolderFrom), Paths.get(directoryFolderTo));
     } catch (IOException e) {
       e.printStackTrace();
     }
-    //System.out.println(directoryFolderFrom + " moved to " + directoryFolderTo);
   }
 
 
@@ -111,46 +109,42 @@ public class FolderService {
     String directoryNewFOlder = getDirectoryFolder(newFolder);
     File oldDirectory = new File(directoryOldFolder);
     File newDirectory = new File(directoryNewFOlder);
-
-    //System.out.println(oldDirectory+ " rename to "+newDirectory + " result: " + oldDirectory.renameTo(newDirectory));
-
+    oldDirectory.renameTo(newDirectory);
   }
 
   public void addNewNode(String newFolder) {
     String directoryFolderForAdd = getDirectoryFolder(newFolder);
     Path pathForAdd = Paths.get(directoryFolderForAdd);
     try {
+      String parentDirectoryFromChild = getParentDirectoryFromChild(directoryFolderForAdd);
+      folderRepository.addNewFolder(parentDirectoryFromChild, directoryFolderForAdd);
       Files.createDirectories(pathForAdd);
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-  public Set<Folder> getAllDirectoriesFromFolder(String directory) {
-        Set<Folder> result = new HashSet<>();
-        extractDataFromDBorFileSystem(directory, result);
-        if (result.size() != 0 && isASearchedFromFileSystem) {
-            folderRepository.writeAllFoundedDirectoriesIntoDB(result);
-        }
-        isASearchedFromFileSystem = false;
-        return result;
-    //return currentDirectories(directory);
+  private String getParentDirectoryFromChild (String newDirectory) {
+    String[] splitStrings = newDirectory.split("\\\\");
+    splitStrings[splitStrings.length - 1] = "";
+    return String.join("\\\\", splitStrings);
   }
 
-  private void extractDataFromDBorFileSystem(String directory, Set<Folder> result) {
-//    if (folderRepository.isFolderPresentInDB(directory)) {
-//      String sqlForChilds = folderRepository.extractSqlForChildFolders(directory);
-//      folderRepository.getChildFoldersFromDatabase(result, sqlForChilds);
-//    } else {
-      isASearchedFromFileSystem = true;
-      result.addAll(currentDirectories(directory));
-    //}
+  private Set<Folder> getAllDirectoriesFromFolder(String directory) {
+        if (countIterators == 0){
+          folderRepository.isFolderPresentInDB();
+        }
+        countIterators++;
+        Set<Folder> result = new HashSet<>(currentDirectories(directory));
+        if (!result.isEmpty()) {
+            folderRepository.writeAllFoundedDirectoriesIntoDB(result, directory);
+        }
+        return result;
   }
 
   // Возвращает список директорий в папке
   private List<Folder> currentDirectories(String path) {
     List<Folder> result = null;
-
     // Список файлов текущей директории
     String[] currentFiles = new File(path).list();
     if (currentFiles != null) {
@@ -166,7 +160,7 @@ public class FolderService {
 
   private File getFileFromFullNameFileOrDirectory(String fileOrDirectoryPath,
                                                   String fileOrDirectoryName) {
-    String path = fileOrDirectoryPath + "\\" + fileOrDirectoryName;
+    String path = String.format("%s\\%s", fileOrDirectoryPath, fileOrDirectoryName);
     return new File(path);
   }
 }
