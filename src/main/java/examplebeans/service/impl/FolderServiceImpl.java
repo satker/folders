@@ -2,11 +2,8 @@ package examplebeans.service.impl;
 
 import examplebeans.dao.FolderDao;
 import examplebeans.dto.FolderManagerDto;
-import examplebeans.dto.JSONFolderDto;
 import examplebeans.mapper.FolderManagerMapper;
-import examplebeans.mapper.JSONFolderMapper;
 import examplebeans.model.FolderManager;
-import examplebeans.model.JSONFolder;
 import examplebeans.service.FolderService;
 import java.io.File;
 import java.io.IOException;
@@ -49,28 +46,6 @@ public class FolderServiceImpl implements FolderService {
                 .collect(Collectors.toSet());
     }
 
-    private List<JSONFolder> getJSONFromStringFolders(Set<String> allForFolder) {
-        return allForFolder.stream()
-                .map(folder -> JSONFolder.builder().text(folder).build())
-                .collect(Collectors.toList());
-    }
-
-    public String getJSONChildesFromParentDirectory(Set<FolderManagerDto> allForFolderManager) {
-        if (allForFolderManager != null) {
-            Set<String> stringCollectionFromFolder = getStringCollectionFromFolder(allForFolderManager);
-            List<JSONFolder> jsonFromStringFolders = getJSONFromStringFolders(
-                stringCollectionFromFolder);
-            List<JSONFolderDto> jsonFolderDtos = JSONFolderMapper.INSTANCE.jsonFoldersToJsonFolderDtos(
-                jsonFromStringFolders);
-            return getFormedStringFromListJSON(jsonFolderDtos);
-        } else {
-            return "";
-        }
-    }
-
-    private String getFormedStringFromListJSON(List<JSONFolderDto> jsonFolderDtos) {
-        return jsonFolderDtos.stream().map(JSONFolderDto::getJson).collect(Collectors.joining(",","[","]"));
-    }
 
     public void removeNode(String folder) {
         String directoryRemovingNode = getDirectoryFolder(folder);

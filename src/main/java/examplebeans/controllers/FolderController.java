@@ -2,9 +2,10 @@ package examplebeans.controllers;
 
 import examplebeans.dto.FolderManagerDto;
 import examplebeans.service.FolderService;
+import examplebeans.service.JSONFolderService;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,13 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
+@AllArgsConstructor
 public class FolderController {
     private FolderService folderService;
-
-    @Autowired
-    private void setFolderService(FolderService folderService) {
-        this.folderService = folderService;
-    }
+    private JSONFolderService jsonFolderService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public ModelAndView getFirstFolders() {
@@ -37,8 +35,14 @@ public class FolderController {
         e.printStackTrace();
       }
         Set<FolderManagerDto> allForFolderManager = folderService.getAllForFolder(folder);
-        return folderService.getJSONChildesFromParentDirectory(
-            allForFolderManager);
+        if (allForFolderManager != null) {
+            Set<String> stringCollectionFromFolder = folderService.getStringCollectionFromFolder(
+                allForFolderManager);
+            return jsonFolderService.getJSONChildesFromParentDirectory(
+                stringCollectionFromFolder);
+        } else {
+            return "";
+        }
     }
 
 
