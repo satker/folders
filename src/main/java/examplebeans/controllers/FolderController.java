@@ -1,6 +1,8 @@
 package examplebeans.controllers;
 
-import examplebeans.dao.Folder;
+import examplebeans.dto.FolderManagerDto;
+import examplebeans.model.FolderManager;
+import examplebeans.model.JSONFolder;
 import examplebeans.service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,26 +16,26 @@ import java.util.Set;
 
 @RestController
 public class FolderController {
+    private FolderService folderService;
+
     @Autowired
-    public void setFolderService(FolderService folderService) {
+    private void setFolderService(FolderService folderService) {
         this.folderService = folderService;
     }
 
-    private FolderService folderService;
-
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public ModelAndView getFirstFolders() {
-        Set<Folder> allForFolder = folderService.getAllForFolder(null);
-        Set<String> collect = folderService.getStringCollectionFromFolder(allForFolder);
+        Set<FolderManagerDto> allForFolderManager = folderService.getAllForFolder(null);
+        Set<String> collect = folderService.getStringCollectionFromFolder(allForFolderManager);
         ModelAndView model = new ModelAndView("WEB-INF/jsp/index.jsp");
         model.addObject("list", collect);
         return model;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{folder}")
-    public String getNextFolders(@PathVariable() String folder) {
-        Set<Folder> allForFolder = folderService.getAllForFolder(folder);
-        return folderService.getJSONChildesFromParentDirectory(allForFolder);
+    public List<JSONFolder> getNextFolders(@PathVariable() String folder) {
+        Set<FolderManagerDto> allForFolderManager = folderService.getAllForFolder(folder);
+        return folderService.getJSONChildesFromParentDirectory(allForFolderManager);
     }
 
 
@@ -44,7 +46,7 @@ public class FolderController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{from}/{to}")
     public void moveFolder(@PathVariable(value = "from") String from,
-                       @PathVariable(value = "to") String to) {
+                           @PathVariable(value = "to") String to) {
         folderService.moveNode(from, to);
     }
 

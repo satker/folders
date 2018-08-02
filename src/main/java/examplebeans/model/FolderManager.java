@@ -1,4 +1,4 @@
-package examplebeans.dao;
+package examplebeans.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,6 @@ import java.io.File;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Folder {
+public class FolderManager {
     private File directory;
 }
