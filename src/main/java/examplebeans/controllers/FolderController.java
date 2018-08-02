@@ -3,6 +3,10 @@ package examplebeans.controllers;
 import examplebeans.dto.FolderManagerDto;
 import examplebeans.service.FolderService;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class FolderController {
     private FolderService folderService;
+    int numberOfCores = Runtime.getRuntime().availableProcessors();
+    ExecutorService executorService = Executors.newFixedThreadPool(numberOfCores);
 
     @Autowired
     private void setFolderService(FolderService folderService) {
@@ -30,6 +36,11 @@ public class FolderController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/{folder}")
     public String getNextFolders(@PathVariable() String folder) {
+      try {
+        TimeUnit.SECONDS.sleep(2);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
         Set<FolderManagerDto> allForFolderManager = folderService.getAllForFolder(folder);
         return folderService.getJSONChildesFromParentDirectory(
             allForFolderManager);
