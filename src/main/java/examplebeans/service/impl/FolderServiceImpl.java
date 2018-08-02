@@ -1,44 +1,38 @@
 package examplebeans.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import examplebeans.dto.FolderManagerDto;
-import examplebeans.mapper.FolderManagerMapper;
-import examplebeans.model.FolderManager;
 import examplebeans.dao.FolderDao;
+import examplebeans.dto.FolderManagerDto;
+import examplebeans.dto.JSONFolderDto;
+import examplebeans.mapper.FolderManagerMapper;
+import examplebeans.mapper.JSONFolderMapper;
+import examplebeans.model.FolderManager;
 import examplebeans.model.JSONFolder;
 import examplebeans.service.FolderService;
-import org.h2.store.fs.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import org.h2.store.fs.FileUtils;
+import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class FolderServiceImpl implements FolderService {
-
-    @Autowired
-    private void setFolderDao(FolderDao folderDao) {
-        this.folderDao = folderDao;
-    }
-
     private FolderDao folderDao;
-
-    private int countIterators = 0;
     public Set<FolderManagerDto> getAllForFolder(String folder) {
         String directory = getDirectoryFolder(folder);
-        return getAllDirectoriesFromFolder(directory);
+        return getAllDirectoriesFromFolder(directory, folder);
     }
 
     private String getDirectoryFolder(String folder) {
-        String basicFolder = "D:\\java_projects\\folders\\src\\main\\resources\\examplefolders";
+        String basicFolder = "C:\\Users\\Artem_Kunats\\IdeaProjects\\folders\\src\\main\\resources";
         return folder == null ? basicFolder : basicFolder + "\\" + getDirectoryOfFolder(folder);
     }
 
@@ -56,30 +50,26 @@ public class FolderServiceImpl implements FolderService {
     }
 
     private List<JSONFolder> getJSONFromStringFolders(Set<String> allForFolder) {
-        ObjectMapper mapper = new ObjectMapper();
-        allForFolder.stream()
-                .map(folder -> JSONFolder.builder().text(folder).build())
-                .map(fol -> {
-                    try {
-                        return mapper.writeValueAsString(fol);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                        return "";
-                    }
-                })
-                .forEach(System.out::println);
         return allForFolder.stream()
                 .map(folder -> JSONFolder.builder().text(folder).build())
                 .collect(Collectors.toList());
     }
 
-    public List<JSONFolder> getJSONChildesFromParentDirectory(Set<FolderManagerDto> allForFolderManager) {
+    public String getJSONChildesFromParentDirectory(Set<FolderManagerDto> allForFolderManager) {
         if (allForFolderManager != null) {
             Set<String> stringCollectionFromFolder = getStringCollectionFromFolder(allForFolderManager);
-            return getJSONFromStringFolders(stringCollectionFromFolder);
+            List<JSONFolder> jsonFromStringFolders = getJSONFromStringFolders(
+                stringCollectionFromFolder);
+            List<JSONFolderDto> jsonFolderDtos = JSONFolderMapper.INSTANCE.jsonFoldersToJsonFolderDtos(
+                jsonFromStringFolders);
+            return getFormedStringFromListJSON(jsonFolderDtos);
         } else {
-            return Collections.singletonList(null);
+            return "";
         }
+    }
+
+    private String getFormedStringFromListJSON(List<JSONFolderDto> jsonFolderDtos) {
+        return jsonFolderDtos.stream().map(JSONFolderDto::getJson).collect(Collectors.joining(",","[","]"));
     }
 
     public void removeNode(String folder) {
@@ -127,11 +117,10 @@ public class FolderServiceImpl implements FolderService {
         return String.join("\\", splitStrings).replaceAll("\\\\null", "");
     }
 
-    private Set<FolderManagerDto> getAllDirectoriesFromFolder(String directory) {
-        if (countIterators == 0) {
+    private Set<FolderManagerDto> getAllDirectoriesFromFolder(String directory, String folder) {
+        if (folder == null) {
             folderDao.isFolderPresentInDB();
         }
-        countIterators++;
         Set<FolderManager> result = new HashSet<>(currentDirectories(directory));
         if (!result.isEmpty()) {
             folderDao.writeAllFoundedDirectoriesIntoDB(result, directory);

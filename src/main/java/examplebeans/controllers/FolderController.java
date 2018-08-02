@@ -1,18 +1,14 @@
 package examplebeans.controllers;
 
 import examplebeans.dto.FolderManagerDto;
-import examplebeans.model.FolderManager;
-import examplebeans.model.JSONFolder;
 import examplebeans.service.FolderService;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
-import java.util.Set;
 
 @RestController
 public class FolderController {
@@ -33,9 +29,10 @@ public class FolderController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{folder}")
-    public List<JSONFolder> getNextFolders(@PathVariable() String folder) {
+    public String getNextFolders(@PathVariable() String folder) {
         Set<FolderManagerDto> allForFolderManager = folderService.getAllForFolder(folder);
-        return folderService.getJSONChildesFromParentDirectory(allForFolderManager);
+        return folderService.getJSONChildesFromParentDirectory(
+            allForFolderManager);
     }
 
 

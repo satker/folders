@@ -93,7 +93,6 @@
         function moveNode(event, nodes, isSourceNode, source, isTargetNode, target) {
             iteratesNodesAndChangeIt(currentNode);
             xhr.open("PUT", '/' + allNodes[source.id] + '/' + allNodes[target.id], true);
-            document.write(allNodes[source.id] + " to " + allNodes[target.id]);
             xhr.send();
             easyTree.addNode(source, target.id);
             var childrenWithMovingNode = easyTree.getNode(target.id).children;
@@ -193,7 +192,11 @@
             var strings = prefix.split("->");
             strings[strings.length - 1] = "";
             for (var i = 0; i < strings.length; i++) {
-                resultDirectory = resultDirectory + "->" + strings[i];
+                if (resultDirectory !== ""){
+                  resultDirectory = resultDirectory + "->" + strings[i];
+                } else {
+                    resultDirectory = strings[i];
+                }
             }
 
             xhr.open("POST", prefix + '/' + resultDirectory + nameNode, true);
