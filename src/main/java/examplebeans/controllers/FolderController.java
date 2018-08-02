@@ -1,70 +1,50 @@
 package examplebeans.controllers;
 
-import examplebeans.dto.FolderManagerDto;
 import examplebeans.service.FolderService;
-import examplebeans.service.JSONFolderService;
+
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
+
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @AllArgsConstructor
 public class FolderController {
-    private FolderService folderService;
-    private JSONFolderService jsonFolderService;
+    private final FolderService folderService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/")
+    @GetMapping
     public ModelAndView getFirstFolders() {
-        Set<FolderManagerDto> allForFolderManager = folderService.getAllForFolder(null);
-        Set<String> collect = folderService.getStringCollectionFromFolder(allForFolderManager);
+        Set<String> collect = folderService.getChildFoldersByParent(null);
         ModelAndView model = new ModelAndView("WEB-INF/jsp/index.jsp");
         model.addObject("list", collect);
         return model;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{folder}")
-    public String getNextFolders(@PathVariable() String folder) {
-      try {
-        TimeUnit.SECONDS.sleep(2);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-        Set<FolderManagerDto> allForFolderManager = folderService.getAllForFolder(folder);
-        if (allForFolderManager != null) {
-            Set<String> stringCollectionFromFolder = folderService.getStringCollectionFromFolder(
-                allForFolderManager);
-            return jsonFolderService.getJSONChildesFromParentDirectory(
-                stringCollectionFromFolder);
-        } else {
-            return "";
-        }
+    @PostMapping(value = "/{folder}")
+    public String getNextFolders(@PathVariable("folder") String folder) {
+        return folderService.getJsonOfChildsByParent(folder);
     }
 
-
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{folder}")
-    public void removeFolder(@PathVariable() String folder) {
+    @DeleteMapping(value = "/{folder}")
+    public void removeFolder(@PathVariable("folder") String folder) {
         folderService.removeNode(folder);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{from}/{to}")
-    public void moveFolder(@PathVariable(value = "from") String from,
-                           @PathVariable(value = "to") String to) {
+    @PutMapping(value = "/{from}/{to}")
+    public void moveFolder(@PathVariable("from") String from,
+                           @PathVariable("to") String to) {
         folderService.moveNode(from, to);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{oldFolder}/{newFolder}")
-    public void editFolderName(@PathVariable() String oldFolder,
-                               @PathVariable() String newFolder) {
+    @PostMapping(value = "/{oldFolder}/{newFolder}")
+    public void editFolderName(@PathVariable("oldFolder") String oldFolder,
+                               @PathVariable("newFolder") String newFolder) {
         folderService.editFolderName(oldFolder, newFolder);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{folder}")
-    public void addNewNode(@PathVariable() String folder) {
-        folderService.addNewNode(folder);
+    @PutMapping(value = "/{folder}")
+    public void addNewNode(@PathVariable("folder") String folder) {
+        folderService.addNewFolder(folder);
     }
 }
