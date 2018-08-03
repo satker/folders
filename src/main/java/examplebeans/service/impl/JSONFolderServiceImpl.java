@@ -23,6 +23,11 @@ public class JSONFolderServiceImpl implements JSONFolderService {
   private List<JSONFolder> getJSONFromStringFolders(Set<String> allForFolder) {
     return allForFolder.stream()
                        .map(folder -> JSONFolder.builder()
+                                                .isActive(false)
+                                                .enableDnd(true)
+                                                .isFolder(true)
+                                                .isExpanded(false)
+                                                .isLazy(true)
                                                 .text(folder)
                                                 .build())
                        .collect(Collectors.toList());

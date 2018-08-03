@@ -2,116 +2,118 @@ package examplebeans.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @JsonPropertyOrder
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class JSONFolder {
-    private boolean isActive = false;
-    private boolean enableDnd = true;
-    private boolean isFolder = true;
-    private boolean isExpanded = false;
-    private boolean isLazy = true;
-    private boolean iconUrl;
-    private String id;
-    private String href;
-    private String hrefTarget;
-    private String lazyUrl;
-    private String lazyUrlJson;
-    private String liClass;
-    @NonNull
-    private String text;
-    private String textCss;
-    private String tooltip;
-    private String uiIcon;
-    private String children;
 
-    @JsonProperty
-    public boolean isActive() {
-        return isActive;
-    }
+  private boolean isActive;
+  private boolean enableDnd;
+  private boolean isFolder;
+  private boolean isExpanded;
+  private boolean isLazy;
+  private boolean iconUrl;
+  private String id;
+  private String href;
+  private String hrefTarget;
+  private String lazyUrl;
+  private String lazyUrlJson;
+  private String liClass;
+  @NonNull
+  private String text;
+  private String textCss;
+  private String tooltip;
+  private String uiIcon;
+  private String children;
 
-    @JsonProperty
-    public boolean isEnableDnd() {
-        return enableDnd;
-    }
+  @JsonProperty("isActive")
+  public boolean isActive() {
+    return isActive;
+  }
 
-    @JsonProperty
-    public boolean isFolder() {
-        return isFolder;
-    }
+  @JsonProperty("isEnableDnd")
+  public boolean isEnableDnd() {
+    return enableDnd;
+  }
 
-    @JsonProperty
-    public boolean isExpanded() {
-        return isExpanded;
-    }
+  @JsonProperty("isFolder")
+  public boolean isFolder() {
+    return isFolder;
+  }
 
-    @JsonProperty
-    public boolean isLazy() {
-        return isLazy;
-    }
+  @JsonProperty("isExpanded")
+  public boolean isExpanded() {
+    return isExpanded;
+  }
 
-    @JsonProperty
-    public boolean isIconUrl() {
-        return iconUrl;
-    }
+  @JsonProperty("isLazy")
+  public boolean isLazy() {
+    return isLazy;
+  }
 
-    public String getId() {
-        return id;
-    }
+  @JsonProperty("isIconUrl")
+  public boolean isIconUrl() {
+    return iconUrl;
+  }
 
-    @JsonProperty
-    public String getHref() {
-        return href;
-    }
+  @JsonProperty("id")
+  public String getId() {
+    return id;
+  }
 
-    @JsonProperty
-    public String getHrefTarget() {
-        return hrefTarget;
-    }
+  @JsonProperty("href")
+  public String getHref() {
+    return href;
+  }
 
-    @JsonProperty
-    public String getLazyUrl() {
-        return lazyUrl;
-    }
+  @JsonProperty("hrefTarget")
+  public String getHrefTarget() {
+    return hrefTarget;
+  }
 
-    @JsonProperty
-    public String getLazyUrlJson() {
-        return lazyUrlJson;
-    }
+  @JsonProperty("lazyUrl")
+  public String getLazyUrl() {
+    return lazyUrl;
+  }
 
-    @JsonProperty
-    public String getLiClass() {
-        return liClass;
-    }
+  @JsonProperty("lazyUrlJson")
+  public String getLazyUrlJson() {
+    return lazyUrlJson;
+  }
 
-    @JsonProperty
-    public String getText() {
-        return text;
-    }
+  @JsonProperty("liClass")
+  public String getLiClass() {
+    return liClass;
+  }
 
-    @JsonProperty
-    public String getTextCss() {
-        return textCss;
-    }
+  @JsonProperty("text")
+  public String getText() {
+    return text;
+  }
 
-    @JsonProperty
-    public String getTooltip() {
-        return tooltip;
-    }
+  @JsonProperty("textCss")
+  public String getTextCss() {
+    return textCss;
+  }
 
-    @JsonProperty
-    public String getUiIcon() {
-        return uiIcon;
-    }
+  @JsonProperty("tooltip")
+  public String getTooltip() {
+    return tooltip;
+  }
 
-    @JsonProperty
-    public String getChildren() {
-        return children;
-    }
+  @JsonProperty("uiIcon")
+  public String getUiIcon() {
+    return uiIcon;
+  }
+
+  @JsonProperty("children")
+  public String getChildren() {
+    return children;
+  }
 }

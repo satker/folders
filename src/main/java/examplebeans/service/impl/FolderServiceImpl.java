@@ -39,7 +39,7 @@ public class FolderServiceImpl implements FolderService {
     }
 
     private String getDirectoryFolder(String folder) {
-        String basicFolder = "D:\\java_projects\\folders\\src\\main\\resources\\examplefolders";
+        String basicFolder = "C:\\Users\\Artem_Kunats\\IdeaProjects\\folders\\src\\main\\resources";
         return folder == null ? basicFolder : basicFolder + "\\" + getDirectoryOfFolder(folder);
     }
 
@@ -96,7 +96,7 @@ public class FolderServiceImpl implements FolderService {
         } catch (IOException e) {
             log.error("Failed to move " + directoryFolderFrom + " to " + directoryFolderTo + " by one of this file don't present");
         }
-        folderDao.moveFolderToAnotherRepository(getDirectoryFolder(to), directoryFolderTo, directoryFolderFrom);
+        folderDao.moveFolderToAnotherRepository(directoryFolderTo, directoryFolderFrom);
     }
 
 
