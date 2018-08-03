@@ -1,9 +1,9 @@
 package examplebeans.service.impl;
 
 import examplebeans.dao.FolderDao;
-import examplebeans.dto.FolderManagerDto;
-import examplebeans.mapper.FolderManagerMapper;
-import examplebeans.model.FolderManager;
+import examplebeans.dto.FolderDto;
+import examplebeans.mapper.FolderMapper;
+import examplebeans.model.Folder;
 import examplebeans.service.FolderService;
 import examplebeans.service.JSONFolderService;
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class FolderServiceImpl implements FolderService {
 
     private final JSONFolderService jsonFolderService;
 
-    private Set<FolderManagerDto> getAllForFolder(String folder) {
+    private Set<FolderDto> getAllForFolder(String folder) {
         String directory = getDirectoryFolder(folder);
         return getAllDirectoriesFromFolder(directory, folder);
     }
@@ -48,9 +48,9 @@ public class FolderServiceImpl implements FolderService {
                 .replaceAll(" ", "");
     }
 
-    private Set<String> getStringCollectionFromFolder(Set<FolderManagerDto> allForFolderManagerDto) {
-        return allForFolderManagerDto.stream()
-                .map(FolderManagerDto::getDirectory)
+    private Set<String> getStringCollectionFromFolder(Set<FolderDto> allForFolderDto) {
+        return allForFolderDto.stream()
+                .map(FolderDto::getDirectory)
                 .map(folder -> folder.split("\\\\"))
                 .map(flatFolder -> flatFolder[flatFolder.length - 1])
                 .collect(Collectors.toSet());
@@ -78,7 +78,7 @@ public class FolderServiceImpl implements FolderService {
     public Set<String> getChildFoldersByParent(String parent) {
         BasicConfigurator.configure();
         waitTwoSeconds();
-        Set<FolderManagerDto> allForFolderManager = getAllForFolder(parent);
+        Set<FolderDto> allForFolderManager = getAllForFolder(parent);
         return getStringCollectionFromFolder(allForFolderManager);
     }
 
@@ -127,28 +127,25 @@ public class FolderServiceImpl implements FolderService {
         return String.join("\\", splitStrings).replaceAll("\\\\null", "");
     }
 
-    private Set<FolderManagerDto> getAllDirectoriesFromFolder(String directory, String folder) {
-        if (folder == null) {
-            folderDao.isFolderPresentInDB();
-        }
-        Set<FolderManager> result = new HashSet<>(currentDirectories(directory));
+    private Set<FolderDto> getAllDirectoriesFromFolder(String directory, String folder) {
+        Set<Folder> result = new HashSet<>(currentDirectories(directory));
         if (!result.isEmpty()) {
             folderDao.writeAllFoundedDirectoriesIntoDB(result, directory);
         }
-        return FolderManagerMapper.INSTANCE.foldersToFolderDTOs(result);
+        return FolderMapper.INSTANCE.foldersToFolderDTOs(result);
     }
 
     // Возвращает список директорий в папке
-    private List<FolderManager> currentDirectories(String path) {
-        List<FolderManager> result = null;
+    private List<Folder> currentDirectories(String path) {
+        List<Folder> result = null;
         // Список файлов текущей директории
         String[] currentFiles = new File(path).list();
         if (currentFiles != null) {
             result = Arrays.stream(currentFiles)
                     .map(fileOrDirectoryName ->
                             getDirectoryFromFullNameFileOrDirectory(path, fileOrDirectoryName))
-                    .map(directory -> FolderManagerDto.builder().directory(directory).build())
-                    .map(FolderManagerMapper.INSTANCE::folderDtoToFolder)
+                    .map(directory -> FolderDto.builder().directory(directory).build())
+                    .map(FolderMapper.INSTANCE::folderDtoToFolder)
                     .filter(file -> file.getDirectory().isDirectory())
                     .collect(Collectors.toList());
         }

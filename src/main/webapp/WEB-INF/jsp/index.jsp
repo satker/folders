@@ -65,7 +65,7 @@
                 }
             }
             if (currentNode != null) {
-                iteratesNodesAndChangeIt(currentNode);
+                iteratesNodesAndChangeIt(currentNode.children);
 
             }
 
@@ -76,12 +76,11 @@
             loadSelectBox();
         }
 
-        function iteratesNodesAndChangeIt(node) {
-            var childrenOfCurrentNode = node.children;
+        function iteratesNodesAndChangeIt(childrenOfCurrentNode) {
             if (childrenOfCurrentNode !== null) {
-                var prefix = allNodes[node.id];
+                var prefix = allNodes[currentNode.id];
                 if (prefix === undefined) {
-                    prefix = node.text;
+                    prefix = currentNode.text;
                 }
                 for (var i = 0, size = childrenOfCurrentNode.length; i < size; i++) {
                     allNodes[childrenOfCurrentNode[i].id] =
@@ -91,7 +90,7 @@
         }
 
         function moveNode(event, nodes, isSourceNode, source, isTargetNode, target) {
-            iteratesNodesAndChangeIt(currentNode);
+            //iteratesNodesAndChangeIt(currentNode.children);
             xhr.open("PUT", '/' + allNodes[source.id] + '/' + allNodes[target.id], true);
             xhr.send();
             easyTree.addNode(source, target.id);
@@ -108,7 +107,7 @@
         }
 
         function addNode() {
-            iteratesNodesAndChangeIt(currentNode);
+            //iteratesNodesAndChangeIt(currentNode.children);
             var sourceNode = {};
             sourceNode.text = $('#nodeText').val();
             sourceNode.isFolder = true;
@@ -128,7 +127,6 @@
             // if (currentNode != null) {
             //     iteratesNodesAndChangeIt(currentNode.children);
             // }
-            iteratesNodesAndChangeIt(currentNode);
             var select = $('#lstNodes')[0];
             var currentlySelected = $('#lstNodes :selected').val();
 
@@ -160,7 +158,7 @@
         }
 
         function removeNodeX() {
-            iteratesNodesAndChangeIt(currentNode);
+            //iteratesNodesAndChangeIt(currentNode.children);
             var currentlySelected = $('#lstNodes :selected').val();
             var node = easyTree.getNode(currentlySelected);
             if (!node) {
@@ -176,7 +174,7 @@
         }
 
         function edit() {
-            iteratesNodesAndChangeIt(currentNode);
+            //iteratesNodesAndChangeIt(currentNode.children);
             var nameNode = $('#nodeText').val();
             var currentlySelected = $('#lstNodes :selected').val();
             var node = easyTree.getNode(currentlySelected);

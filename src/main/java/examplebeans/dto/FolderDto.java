@@ -5,7 +5,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FolderManagerDto {
+public class FolderDto {
     @Getter
     @Setter
     private String directory;

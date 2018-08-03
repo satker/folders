@@ -11,7 +11,7 @@ import java.io.File;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FolderManager {
+public class Folder {
     private int id;
     private File directory;
 }
