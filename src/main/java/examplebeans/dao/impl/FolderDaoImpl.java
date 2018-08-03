@@ -85,7 +85,9 @@ public class FolderDaoImpl implements FolderDao {
     }
 
     public void moveFolderToAnotherRepository(String directoryFolderTo,
-                                              String directoryFolderFrom) {
+                                              String directoryFolderFrom, String to) {
+        Integer idParent = getIdParent(to);
+        jdbcTemplate.update("UPDATE folder SET id_parent = ? WHERE name_folder = ?;", idParent, directoryFolderFrom);
         editFolderName(directoryFolderFrom, directoryFolderTo);
     }
 

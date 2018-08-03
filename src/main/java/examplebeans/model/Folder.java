@@ -14,4 +14,5 @@ import java.io.File;
 public class Folder {
     private int id;
     private File directory;
+    private int idParent;
 }

@@ -96,7 +96,7 @@ public class FolderServiceImpl implements FolderService {
         } catch (IOException e) {
             log.error("Failed to move " + directoryFolderFrom + " to " + directoryFolderTo + " by one of this file don't present");
         }
-        folderDao.moveFolderToAnotherRepository(directoryFolderTo, directoryFolderFrom);
+        folderDao.moveFolderToAnotherRepository(directoryFolderTo, directoryFolderFrom, to);
     }
 
 
