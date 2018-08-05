@@ -13,7 +13,7 @@
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
         <property name="username" value="sa"/>
         <property name="password" value=""/>
-        <property name="url" value="jdbc:h2:file:~/h2/app_db"/>
+        <property name="url" value="jdbc:h2:file:~/h2/app_db;MODE=MySQL"/>
         <property name="driverClassName" value="org.h2.Driver"/>
     </bean>
 

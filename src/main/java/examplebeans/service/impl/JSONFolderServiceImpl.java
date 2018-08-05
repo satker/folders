@@ -5,14 +5,13 @@ import examplebeans.mapper.JSONFolderMapper;
 import examplebeans.model.JSONFolder;
 import examplebeans.service.JSONFolderService;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JSONFolderServiceImpl implements JSONFolderService {
 
-  public String getJSONChildesFromParentDirectory(Set<String> stringCollectionFromFolder) {
+  public String getJSONChildesFromParentDirectory(List<String> stringCollectionFromFolder) {
     List<JSONFolder> jsonFromStringFolders = getJSONFromStringFolders(
         stringCollectionFromFolder);
     List<JSONFolderDto> jsonFolderDtos = JSONFolderMapper.INSTANCE.jsonFoldersToJsonFolderDtos(
@@ -20,11 +19,11 @@ public class JSONFolderServiceImpl implements JSONFolderService {
     return getFormedStringFromListJSON(jsonFolderDtos);
   }
 
-  private List<JSONFolder> getJSONFromStringFolders(Set<String> allForFolder) {
+  private List<JSONFolder> getJSONFromStringFolders(List<String> allForFolder) {
     return allForFolder.stream()
                        .map(folder -> JSONFolder.builder()
                                                 .isActive(false)
-                                                .enableDnd(true)
+                                                //.enableDnd(true)
                                                 .isFolder(true)
                                                 .isExpanded(false)
                                                 .isLazy(true)

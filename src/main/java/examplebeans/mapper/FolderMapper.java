@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
 import java.util.Set;
 
 @Mapper(componentModel = "spring")
@@ -20,6 +21,6 @@ public interface FolderMapper {
             expression = "java(new java.io.File(folderDto.getDirectory()))")
     Folder folderDtoToFolder(FolderDto folderDto);
 
-    Set<FolderDto> foldersToFolderDTOs(Set<Folder> confirms);
-    Set<Folder> folderDTOsToFolder(Set<FolderDto> confirmDTO);
+    List<FolderDto> foldersToFolderDTOs(List<Folder> confirms);
+    List<Folder> folderDTOsToFolder(List<FolderDto> confirmDTO);
 }

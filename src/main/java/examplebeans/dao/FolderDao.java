@@ -2,11 +2,12 @@ package examplebeans.dao;
 
 import examplebeans.model.Folder;
 
+import java.util.List;
 import java.util.Set;
 
 public interface FolderDao {
-    void writeAllFoundedDirectoriesIntoDB(Set<Folder> result, String directory);
+    void writeAllFoundedDirectoriesIntoDB(List<Folder> result, String directory);
     void addNewFolder(String parentFolderDirectory, String newFolderDirectory);
-    void editFolderName(String directoryOldFolder, String directoryNewFolder);
+    void updateFoldersNameAfterEditFolderName(String directoryOldFolder, String directoryNewFolder);
     void moveFolderToAnotherRepository(String directoryFolderTo, String directoryFolderFrom, String to);
 }

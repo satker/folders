@@ -2,10 +2,8 @@ package examplebeans.dao.impl;
 
 import examplebeans.dao.FolderDao;
 import examplebeans.model.Folder;
-import examplebeans.service.impl.FolderServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,31 +11,34 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class FolderDaoImpl implements FolderDao {
-    private JdbcTemplate jdbcTemplate;
-    private boolean isFirstStep = true;
-    private static final Logger log = Logger.getLogger(FolderServiceImpl.class);
+
+    private static final Logger log = Logger.getLogger(FolderDaoImpl.class);
 
     @Autowired
-    private void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+    public FolderDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void writeAllFoundedDirectoriesIntoDB(Set<Folder> result, String directory) {
+    private final JdbcTemplate jdbcTemplate;
+
+    public void writeAllFoundedDirectoriesIntoDB(List<Folder> result, String directory) {
         Integer idParent = getIdParent(directory);
-        for (Folder folder : result) {
-            String absolutePath = folder.getDirectory()
-                    .getAbsolutePath();
-            try {
-                jdbcTemplate.update("INSERT INTO folder (name_folder, id_parent) VALUES (?, ?)",
-                        absolutePath, idParent);
-            } catch (DuplicateKeyException e) {
-                log.warn("Try to add existing folder.");
-            }
-        }
+        String sqlForInsertValues = "INSERT INTO folder (name_folder, id_parent) VALUES (?, ?) " +
+                "ON DUPLICATE KEY UPDATE id_parent = id_parent;";
+        jdbcTemplate.batchUpdate(sqlForInsertValues,
+                result, result.size(), (ps, folder) -> {
+                    ps.setString(1, folder.getDirectory().getAbsolutePath());
+                    ps.setInt(2, idParent);
+                });
+    }
+
+    public void moveFolderToAnotherRepository(String directoryFolderTo,
+                                              String directoryFolderFrom, String to) {
+        Integer idParent = getIdParent(to);
+        updateChildsAndParentRecursively(directoryFolderFrom, directoryFolderTo, idParent);
     }
 
     public void addNewFolder(String parentFolderDirectory, String newFolderDirectory) {
@@ -45,35 +46,68 @@ public class FolderDaoImpl implements FolderDao {
         jdbcTemplate.update("INSERT INTO folder (name_folder, id_parent) VALUES (?, ?)", newFolderDirectory, idParent);
     }
 
-    public void editFolderName(String directoryOldFolder, String directoryNewFolder) {
-        Integer idFolder = getIdByDirectoryName(directoryOldFolder);
-        updateChildsWithNewNameParent(directoryOldFolder, directoryNewFolder, idFolder);
-        jdbcTemplate.update("UPDATE folder SET name_folder = ? WHERE id = ?;", directoryNewFolder, idFolder);
+    public void updateFoldersNameAfterEditFolderName(String directoryOldFolder, String directoryNewFolder) {
+        Integer idParent = jdbcTemplate.queryForObject(
+                "SELECT id_parent FROM folder WHERE name_folder = ?",
+                Integer.class, directoryOldFolder);
+        updateChildsAndParentRecursively(directoryOldFolder, directoryNewFolder, idParent);
     }
 
-    private void updateChildsWithNewNameParent(String directoryOldFolder, String directoryNewFolder,
-                                               Integer idFolder) {
-        objectsForBatchUpdate.clear();
-        getSqlForBatchUpdate(directoryOldFolder, directoryNewFolder, idFolder);
-        jdbcTemplate.batchUpdate("UPDATE folder SET name_folder = ? WHERE id = ?;", objectsForBatchUpdate);
+    private void updateChildsAndParentRecursively (String directoryOldFolder, String directoryNewFolder, Integer idParent) {
+        Integer idFolder = getIdByDirectoryName(directoryOldFolder);
+        updateParent(directoryOldFolder, directoryNewFolder, idParent);
+        updateChildes(directoryOldFolder, directoryNewFolder,
+                idFolder);
     }
+
+    private void updateParent(String directoryOldFolder, String directoryNewFolder, Integer idParent) {
+        String sqlForInsertNewValues = "INSERT INTO folder (name_folder, id_parent) VALUES (?, ?) " +
+                "ON DUPLICATE KEY UPDATE id_parent = id_parent;";
+        String sqlForDelete = "DELETE FROM folder WHERE name_folder = ?;";
+        jdbcTemplate.update(sqlForInsertNewValues, directoryNewFolder, idParent);
+        jdbcTemplate.update(sqlForDelete, directoryOldFolder);
+    }
+
+    private void updateChildes(String directoryOldFolder, String directoryNewFolder,
+                               Integer idFolder) {
+        objectsForBatchUpdate.clear();
+        Integer idByDirectoryName = getIdByDirectoryName(directoryNewFolder);
+        getListOfObjectsForUpdate(directoryOldFolder, directoryNewFolder, idFolder, idByDirectoryName);
+        updateRecursivelyByListOfObjects();
+    }
+
+    private void updateRecursivelyByListOfObjects() {
+        String sqlForInsertNewValues = "INSERT INTO folder (name_folder, id_parent) VALUES (?, ?) " +
+                "ON DUPLICATE KEY UPDATE id_parent = id_parent;";
+        String sqlForDelete = "DELETE FROM folder WHERE id = ?;";
+        jdbcTemplate.batchUpdate(sqlForInsertNewValues,
+                objectsForBatchUpdate,
+                objectsForBatchUpdate.size(),
+                ((ps, argument) -> {
+                    ps.setString(1, (String) argument[0]);
+                    ps.setInt(2, (Integer) argument[2]);
+                }));
+        jdbcTemplate.batchUpdate(sqlForDelete,
+                objectsForBatchUpdate,
+                objectsForBatchUpdate.size(),
+                (ps, objectWithId) -> ps.setInt(1, (Integer) objectWithId[1]));
+    }
+
 
     private List<Object[]> objectsForBatchUpdate = new ArrayList<>();
 
-    private void getSqlForBatchUpdate(String directoryOldFolder, String directoryNewFolder, Integer idFolder) {
-        List<Folder> childFoldersFromIdParent = getChildFoldersFromIdParent(idFolder);
-        childFoldersFromIdParent.forEach(folder ->
-                objectsForBatchUpdate.add(updateChildFolderAndDBAfterMoving(directoryOldFolder, directoryNewFolder, folder)));
-    }
-
-    private Object[] updateChildFolderAndDBAfterMoving(String directoryOldFolder, String directoryNewFolder, Folder folder) {
-        String newDirectory = folder.getDirectory()
-                .getAbsolutePath()
-                .replace(directoryOldFolder,
-                        directoryNewFolder);
-        folder.setDirectory(new File(newDirectory));
-        getSqlForBatchUpdate(directoryOldFolder, directoryNewFolder, folder.getId());
-        return new Object[]{newDirectory, folder.getId()};
+    private List<Object[]> getListOfObjectsForUpdate(String directoryOldFolder, String directoryNewFolder, Integer idOldFolder, Integer idNewFolder) {
+        List<Folder> childFoldersFromIdParent = getChildFoldersFromIdParent(idOldFolder);
+        childFoldersFromIdParent.forEach(folder -> {
+            String newDirectory = folder.getDirectory()
+                    .getAbsolutePath()
+                    .replace(directoryOldFolder,
+                            directoryNewFolder);
+            folder.setDirectory(new File(newDirectory));
+            objectsForBatchUpdate.add(new Object[]{newDirectory, folder.getId(), idNewFolder});
+            getListOfObjectsForUpdate(directoryOldFolder, directoryNewFolder, folder.getId(), folder.getId());
+        });
+        return objectsForBatchUpdate;
     }
 
     private List<Folder> getChildFoldersFromIdParent(Integer idParent) {
@@ -84,29 +118,19 @@ public class FolderDaoImpl implements FolderDao {
                         .build(), idParent);
     }
 
-    public void moveFolderToAnotherRepository(String directoryFolderTo,
-                                              String directoryFolderFrom, String to) {
-        Integer idParent = getIdParent(to);
-        jdbcTemplate.update("UPDATE folder SET id_parent = ? WHERE name_folder = ?;", idParent, directoryFolderFrom);
-        editFolderName(directoryFolderFrom, directoryFolderTo);
-    }
-
     private Integer getIdParent(String directory) {
         try {
             return getIdByDirectoryName(directory);
         } catch (EmptyResultDataAccessException e) {
             log.warn("Folder don't present in DB, try to create it.");
-            if (isFirstStep) {
-                jdbcTemplate.update("INSERT INTO folder (name_folder, id_parent) VALUES (?, ?)", directory, 0);
-                isFirstStep = false;
-            }
+            jdbcTemplate.update("INSERT INTO folder (name_folder, id_parent) VALUES (?, ?)", directory, 0);
             return getIdByDirectoryName(directory);
         }
     }
 
     private Integer getIdByDirectoryName(String directory) {
         return jdbcTemplate.queryForObject(
-            "SELECT id FROM folder WHERE name_folder = ?",
+                "SELECT id FROM folder WHERE name_folder = ?",
                 Integer.class, directory);
     }
 }

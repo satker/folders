@@ -1,6 +1,6 @@
 package examplebeans.service;
 
-import java.util.Set;
+import java.util.List;
 
 public interface FolderService {
 
@@ -9,5 +9,5 @@ public interface FolderService {
     void editFolderName(String oldFolder, String newFolder);
     void addNewFolder(String newFolder);
     String getJsonOfChildsByParent(String parent);
-    Set<String> getChildFoldersByParent(String parent);
+    List<String> getChildFoldersByParent(String parent);
 }

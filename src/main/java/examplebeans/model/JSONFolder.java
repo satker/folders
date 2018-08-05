@@ -14,11 +14,11 @@ import lombok.NonNull;
 public class JSONFolder {
 
   private boolean isActive;
-  private boolean enableDnd;
+  //private boolean enableDnd;
   private boolean isFolder;
   private boolean isExpanded;
   private boolean isLazy;
-  private boolean iconUrl;
+  private String iconUrl;
   private String id;
   private String href;
   private String hrefTarget;
@@ -37,10 +37,10 @@ public class JSONFolder {
     return isActive;
   }
 
-  @JsonProperty("isEnableDnd")
-  public boolean isEnableDnd() {
-    return enableDnd;
-  }
+//  @JsonProperty("isEnableDnd")
+//  public boolean isEnableDnd() {
+//    return enableDnd;
+//  }
 
   @JsonProperty("isFolder")
   public boolean isFolder() {
@@ -57,8 +57,8 @@ public class JSONFolder {
     return isLazy;
   }
 
-  @JsonProperty("isIconUrl")
-  public boolean isIconUrl() {
+  @JsonProperty("iconUrl")
+  public String isIconUrl() {
     return iconUrl;
   }
 

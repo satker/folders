@@ -148,7 +148,7 @@
                 var option = new Option();
                 option.text = prefix + ' ' + nodes[i].text;
                 option.value = nodes[i].id;
-                option.selected = currentlySelected == nodes[i].id;
+                option.selected = currentlySelected === nodes[i].id;
                 select.add(option);
 
                 if (nodes[i].children && nodes[i].children.length > 0) {

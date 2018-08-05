@@ -1,12 +1,11 @@
 package examplebeans.controllers;
 
 import examplebeans.service.FolderService;
-
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -15,7 +14,7 @@ public class FolderController {
 
     @GetMapping
     public ModelAndView getFirstFolders() {
-        Set<String> collect = folderService.getChildFoldersByParent(null);
+        List<String> collect = folderService.getChildFoldersByParent(null);
         ModelAndView model = new ModelAndView("WEB-INF/jsp/index.jsp");
         model.addObject("list", collect);
         return model;
@@ -23,7 +22,8 @@ public class FolderController {
 
     @PostMapping(value = "/{folder}")
     public String getNextFolders(@PathVariable("folder") String folder) {
-        return folderService.getJsonOfChildsByParent(folder);
+        String jsonOfChildsByParent = folderService.getJsonOfChildsByParent(folder);
+        return jsonOfChildsByParent;
     }
 
     @DeleteMapping(value = "/{folder}")

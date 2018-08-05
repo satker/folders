@@ -12,15 +12,13 @@ import org.apache.log4j.Logger;
 import org.h2.store.fs.FileUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -33,13 +31,19 @@ public class FolderServiceImpl implements FolderService {
 
     private final JSONFolderService jsonFolderService;
 
-    private Set<FolderDto> getAllForFolder(String folder) {
+    @PostConstruct
+    private void initializeLogger(){
+        BasicConfigurator.configure();
+    }
+
+    // TODO: убрать null
+    private List<FolderDto> getAllForFolder(String folder) {
         String directory = getDirectoryFolder(folder);
-        return getAllDirectoriesFromFolder(directory, folder);
+        return getAllDirectoriesFromFolder(directory);
     }
 
     private String getDirectoryFolder(String folder) {
-        String basicFolder = "C:\\Users\\Artem_Kunats\\IdeaProjects\\folders\\src\\main\\resources";
+        String basicFolder = "D:\\java_projects\\folders\\src\\main\\resources\\examplefolders";
         return folder == null ? basicFolder : basicFolder + "\\" + getDirectoryOfFolder(folder);
     }
 
@@ -48,12 +52,12 @@ public class FolderServiceImpl implements FolderService {
                 .replaceAll(" ", "");
     }
 
-    private Set<String> getStringCollectionFromFolder(Set<FolderDto> allForFolderDto) {
+    private List<String> getStringCollectionFromFolder(List<FolderDto> allForFolderDto) {
         return allForFolderDto.stream()
                 .map(FolderDto::getDirectory)
                 .map(folder -> folder.split("\\\\"))
                 .map(flatFolder -> flatFolder[flatFolder.length - 1])
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
 
@@ -62,11 +66,12 @@ public class FolderServiceImpl implements FolderService {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             log.error("Delay was failed by InterruptedException");
+            // TODO: обработать exception
         }
     }
 
     public String getJsonOfChildsByParent(String parent) {
-        Set<String> stringCollectionFromFolder = getChildFoldersByParent(parent);
+        List<String> stringCollectionFromFolder = getChildFoldersByParent(parent);
         if (stringCollectionFromFolder != null) {
             return jsonFolderService.getJSONChildesFromParentDirectory(
                     stringCollectionFromFolder);
@@ -75,10 +80,9 @@ public class FolderServiceImpl implements FolderService {
         }
     }
 
-    public Set<String> getChildFoldersByParent(String parent) {
-        BasicConfigurator.configure();
+    public List<String> getChildFoldersByParent(String parent) {
         waitTwoSeconds();
-        Set<FolderDto> allForFolderManager = getAllForFolder(parent);
+        List<FolderDto> allForFolderManager = getAllForFolder(parent);
         return getStringCollectionFromFolder(allForFolderManager);
     }
 
@@ -89,6 +93,7 @@ public class FolderServiceImpl implements FolderService {
 
     public void moveNode(String from, String to) {
         String directoryFolderFrom = getDirectoryFolder(from);
+        String directoryFolderToWithoutResultFolder = getDirectoryFolder(to);
         String[] split = from.replaceAll(" ", "").split("->");
         String directoryFolderTo = getDirectoryFolder(to + "->" + split[split.length - 1]);
         try {
@@ -96,7 +101,7 @@ public class FolderServiceImpl implements FolderService {
         } catch (IOException e) {
             log.error("Failed to move " + directoryFolderFrom + " to " + directoryFolderTo + " by one of this file don't present");
         }
-        folderDao.moveFolderToAnotherRepository(directoryFolderTo, directoryFolderFrom, to);
+        folderDao.moveFolderToAnotherRepository(directoryFolderTo, directoryFolderFrom, directoryFolderToWithoutResultFolder);
     }
 
 
@@ -106,7 +111,7 @@ public class FolderServiceImpl implements FolderService {
         File oldDirectory = new File(directoryOldFolder);
         File newDirectory = new File(directoryNewFolder);
         oldDirectory.renameTo(newDirectory);
-        folderDao.editFolderName(directoryOldFolder, directoryNewFolder);
+        folderDao.updateFoldersNameAfterEditFolderName(directoryOldFolder, directoryNewFolder);
     }
 
     public void addNewFolder(String newFolder) {
@@ -127,12 +132,14 @@ public class FolderServiceImpl implements FolderService {
         return String.join("\\", splitStrings).replaceAll("\\\\null", "");
     }
 
-    private Set<FolderDto> getAllDirectoriesFromFolder(String directory, String folder) {
-        Set<Folder> result = new HashSet<>(currentDirectories(directory));
-        if (!result.isEmpty()) {
+    private List<FolderDto> getAllDirectoriesFromFolder(String directory) {
+        List<Folder> result = currentDirectories(directory);
+        if (result != null) {
             folderDao.writeAllFoundedDirectoriesIntoDB(result, directory);
+            return FolderMapper.INSTANCE.foldersToFolderDTOs(result);
+        } else {
+            return new ArrayList<>();
         }
-        return FolderMapper.INSTANCE.foldersToFolderDTOs(result);
     }
 
     // Возвращает список директорий в папке

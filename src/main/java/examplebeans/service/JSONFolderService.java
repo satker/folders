@@ -1,7 +1,7 @@
 package examplebeans.service;
 
-import java.util.Set;
+import java.util.List;
 
 public interface JSONFolderService {
-  String getJSONChildesFromParentDirectory(Set<String> stringCollectionFromFolder);
+  String getJSONChildesFromParentDirectory(List<String> stringCollectionFromFolder);
 }
