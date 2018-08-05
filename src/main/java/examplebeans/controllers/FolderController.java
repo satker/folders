@@ -12,18 +12,23 @@ import java.util.List;
 public class FolderController {
     private final FolderService folderService;
 
+    @PostMapping(value = "/enterDirectory/{directory}")
+    public ModelAndView addDirectoryForSearch (@PathVariable("directory") String directoryForSearch) {
+        folderService.setDirectoryForSearch(directoryForSearch);
+        List<String> resultFolders = folderService.getChildFoldersByParent(null);
+        ModelAndView model = new ModelAndView("WEB-INF/jsp/index.jsp");
+        model.addObject("list", resultFolders);
+        return model;
+    }
+
     @GetMapping
     public ModelAndView getFirstFolders() {
-        List<String> collect = folderService.getChildFoldersByParent(null);
-        ModelAndView model = new ModelAndView("WEB-INF/jsp/index.jsp");
-        model.addObject("list", collect);
-        return model;
+        return new ModelAndView("WEB-INF/jsp/mainPage.jsp");
     }
 
     @PostMapping(value = "/{folder}")
     public String getNextFolders(@PathVariable("folder") String folder) {
-        String jsonOfChildsByParent = folderService.getJsonOfChildsByParent(folder);
-        return jsonOfChildsByParent;
+        return folderService.getJsonOfChildsByParent(folder);
     }
 
     @DeleteMapping(value = "/{folder}")

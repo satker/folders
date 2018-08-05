@@ -6,10 +6,10 @@ import examplebeans.mapper.FolderMapper;
 import examplebeans.model.Folder;
 import examplebeans.service.FolderService;
 import examplebeans.service.JSONFolderService;
-import lombok.AllArgsConstructor;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.h2.store.fs.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -18,12 +18,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class FolderServiceImpl implements FolderService {
     private static final Logger log = Logger.getLogger(FolderServiceImpl.class);
 
@@ -31,8 +32,16 @@ public class FolderServiceImpl implements FolderService {
 
     private final JSONFolderService jsonFolderService;
 
+    private String directoryForSearch;
+
+    @Autowired
+    private FolderServiceImpl(FolderDao folderDao, JSONFolderService jsonFolderService) {
+        this.folderDao = folderDao;
+        this.jsonFolderService = jsonFolderService;
+    }
+
     @PostConstruct
-    private void initializeLogger(){
+    private void initializeLogger() {
         BasicConfigurator.configure();
     }
 
@@ -43,8 +52,7 @@ public class FolderServiceImpl implements FolderService {
     }
 
     private String getDirectoryFolder(String folder) {
-        String basicFolder = "D:\\java_projects\\folders\\src\\main\\resources\\examplefolders";
-        return folder == null ? basicFolder : basicFolder + "\\" + getDirectoryOfFolder(folder);
+        return folder == null ? directoryForSearch : directoryForSearch + "\\" + getDirectoryOfFolder(folder);
     }
 
     private String getDirectoryOfFolder(String folder) {
@@ -86,6 +94,12 @@ public class FolderServiceImpl implements FolderService {
         return getStringCollectionFromFolder(allForFolderManager);
     }
 
+    @Override
+    public void setDirectoryForSearch(String directoryForSearch) {
+        String step1 = String.join("\\", directoryForSearch.split("->"));
+        this.directoryForSearch = String.join(":\\", step1.split("-\\\\"));
+    }
+
     public void removeNode(String folder) {
         String directoryRemovingNode = getDirectoryFolder(folder);
         FileUtils.deleteRecursive(directoryRemovingNode, true);
@@ -122,7 +136,7 @@ public class FolderServiceImpl implements FolderService {
             folderDao.addNewFolder(parentDirectoryFromChild, directoryFolderForAdd);
             Files.createDirectories(pathForAdd);
         } catch (IOException e) {
-            log.error("Failed to add new folder "+ pathForAdd + ", because this directory don't present");
+            log.error("Failed to add new folder " + pathForAdd + ", because this directory don't present");
         }
     }
 

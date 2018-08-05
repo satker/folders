@@ -15,6 +15,7 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="http://www.easyjstree.com/Scripts/jquery.easytree.min.js"></script>
     </head>
+
     <body>
     <div id="demo_menu" style="float:left; width:250px;">
         <c:if test="${not empty list}">
