@@ -1,11 +1,11 @@
-package examplebeans.service.impl;
+package org.folders.com.service.impl;
 
-import examplebeans.dto.JSONFolderDto;
-import examplebeans.mapper.JSONFolderMapper;
-import examplebeans.model.JSONFolder;
-import examplebeans.service.JSONFolderService;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.folders.com.dto.JSONFolderDto;
+import org.folders.com.mapper.JSONFolderMapper;
+import org.folders.com.model.JSONFolder;
+import org.folders.com.service.JSONFolderService;
 import org.springframework.stereotype.Service;
 
 @Service

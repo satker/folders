@@ -1,4 +1,4 @@
-package examplebeans.configuration;
+package org.folders.com.configuration;
 
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;

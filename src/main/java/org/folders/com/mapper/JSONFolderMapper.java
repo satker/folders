@@ -1,12 +1,10 @@
-package examplebeans.mapper;
+package org.folders.com.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import examplebeans.dto.JSONFolderDto;
-import examplebeans.model.JSONFolder;
 import java.util.List;
-
-import examplebeans.service.impl.FolderServiceImpl;
 import org.apache.log4j.Logger;
+import org.folders.com.dto.JSONFolderDto;
+import org.folders.com.model.JSONFolder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

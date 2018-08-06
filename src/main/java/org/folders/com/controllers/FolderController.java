@@ -1,7 +1,7 @@
-package examplebeans.controllers;
+package org.folders.com.controllers;
 
-import examplebeans.dto.FolderDto;
-import examplebeans.service.FolderService;
+import org.folders.com.dto.FolderDto;
+import org.folders.com.service.FolderService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;

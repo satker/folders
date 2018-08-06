@@ -1,4 +1,4 @@
-package examplebeans.service;
+package org.folders.com.service;
 
 import java.util.List;
 

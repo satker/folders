@@ -1,16 +1,15 @@
-package examplebeans.dao.impl;
-
-import examplebeans.dao.FolderDao;
-import examplebeans.model.Folder;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+package org.folders.com.dao.impl;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
+import org.folders.com.dao.FolderDao;
+import org.folders.com.model.Folder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class FolderDaoImpl implements FolderDao {

@@ -1,4 +1,4 @@
-package examplebeans.model;
+package org.folders.com.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -14,7 +14,6 @@ import lombok.NonNull;
 public class JSONFolder {
 
   private boolean isActive;
-  //private boolean enableDnd;
   private boolean isFolder;
   private boolean isExpanded;
   private boolean isLazy;
@@ -36,11 +35,6 @@ public class JSONFolder {
   public boolean isActive() {
     return isActive;
   }
-
-//  @JsonProperty("isEnableDnd")
-//  public boolean isEnableDnd() {
-//    return enableDnd;
-//  }
 
   @JsonProperty("isFolder")
   public boolean isFolder() {

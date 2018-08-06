@@ -1,13 +1,11 @@
-package examplebeans.mapper;
+package org.folders.com.mapper;
 
-import examplebeans.dto.FolderDto;
-import examplebeans.model.Folder;
+import java.util.List;
+import org.folders.com.dto.FolderDto;
+import org.folders.com.model.Folder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface FolderMapper {

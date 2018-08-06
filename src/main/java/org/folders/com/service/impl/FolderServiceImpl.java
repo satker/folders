@@ -1,18 +1,5 @@
-package examplebeans.service.impl;
+package org.folders.com.service.impl;
 
-import examplebeans.dao.FolderDao;
-import examplebeans.dto.FolderDto;
-import examplebeans.mapper.FolderMapper;
-import examplebeans.model.Folder;
-import examplebeans.service.FolderService;
-import examplebeans.service.JSONFolderService;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-import org.h2.store.fs.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,6 +10,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+import org.folders.com.dao.FolderDao;
+import org.folders.com.dto.FolderDto;
+import org.folders.com.mapper.FolderMapper;
+import org.folders.com.model.Folder;
+import org.folders.com.service.FolderService;
+import org.folders.com.service.JSONFolderService;
+import org.h2.store.fs.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class FolderServiceImpl implements FolderService {

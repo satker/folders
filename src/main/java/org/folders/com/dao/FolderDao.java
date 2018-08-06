@@ -1,9 +1,7 @@
-package examplebeans.dao;
-
-import examplebeans.model.Folder;
+package org.folders.com.dao;
 
 import java.util.List;
-import java.util.Set;
+import org.folders.com.model.Folder;
 
 public interface FolderDao {
     void writeAllFoundedDirectoriesIntoDB(List<Folder> result, String directory);
