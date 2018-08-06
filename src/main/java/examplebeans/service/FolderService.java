@@ -10,5 +10,5 @@ public interface FolderService {
     void addNewFolder(String newFolder);
     String getJsonOfChildsByParent(String parent);
     List<String> getChildFoldersByParent(String parent);
-    void setDirectoryForSearch(String directoryForSearch);
+    boolean setDirectoryForSearch(String directoryForSearch);
 }

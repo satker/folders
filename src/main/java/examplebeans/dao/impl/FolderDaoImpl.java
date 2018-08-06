@@ -35,6 +35,18 @@ public class FolderDaoImpl implements FolderDao {
                 });
     }
 
+    public void removeParentFolderAndChildFolders(String directory) {
+        String sqlForGetFoldersWithoutParent = "select id from folder "
+            + "where id_parent not IN (SELECT id FROM FOLDER) "
+            + "and id_parent <> 0;";
+        jdbcTemplate.update("delete from folder where id = ?", getIdByDirectoryName(directory));
+        List<Integer> idsFodlersWithoutParent = jdbcTemplate.query(sqlForGetFoldersWithoutParent,
+            (var1, var2) -> var1.getInt("id"));
+        jdbcTemplate.batchUpdate("delete from folder where id = ?", idsFodlersWithoutParent,
+            idsFodlersWithoutParent.size(), (ps, var) -> ps.setInt(1, var));
+
+    }
+
     public void moveFolderToAnotherRepository(String directoryFolderTo,
                                               String directoryFolderFrom, String to) {
         Integer idParent = getIdParent(to);

@@ -1,29 +1,41 @@
 package examplebeans.controllers;
 
+import examplebeans.dto.FolderDto;
 import examplebeans.service.FolderService;
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @AllArgsConstructor
 public class FolderController {
     private final FolderService folderService;
 
-    @PostMapping(value = "/enterDirectory/{directory}")
-    public ModelAndView addDirectoryForSearch (@PathVariable("directory") String directoryForSearch) {
-        folderService.setDirectoryForSearch(directoryForSearch);
-        List<String> resultFolders = folderService.getChildFoldersByParent(null);
-        ModelAndView model = new ModelAndView("WEB-INF/jsp/index.jsp");
-        model.addObject("list", resultFolders);
-        return model;
+    @PostMapping(value = "/enter-directory")
+    public ModelAndView addDirectoryForSearch (@ModelAttribute("folder") FolderDto folderDto) {
+        String directory = folderDto.getDirectory();
+        if (folderService.setDirectoryForSearch(directory)) {
+            List<String> resultFolders = folderService.getChildFoldersByParent(null);
+            ModelAndView model = new ModelAndView("index");
+            model.addObject("list", resultFolders);
+            return model;
+        } else {
+            return getFirstFolders();
+        }
     }
 
     @GetMapping
     public ModelAndView getFirstFolders() {
-        return new ModelAndView("WEB-INF/jsp/mainPage.jsp");
+        ModelAndView modelAndView = new ModelAndView("mainPage");
+        modelAndView.addObject("folder", new FolderDto());
+        return modelAndView;
     }
 
     @PostMapping(value = "/{folder}")

@@ -1,7 +1,6 @@
 package examplebeans.configuration;
 
 import javax.sql.DataSource;
-import lombok.AllArgsConstructor;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

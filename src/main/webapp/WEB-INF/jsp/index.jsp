@@ -57,24 +57,30 @@
         });
 
         function openLazyNode(event, nodes, node, hasChildren) {
+
             if (hasChildren) { // don't call ajax if lazy node already has children
                 return false;
             }
+
             if (firstIteration === 0) {
                 for (var i = 0, size = nodes.length; i < size; i++) {
                     allNodes[nodes[i].id] = nodes[i].text;
                 }
             }
+
             if (currentNode != null) {
                 iteratesNodesAndChangeIt(currentNode.children);
 
             }
 
-            node.lazyUrl = '/' + allNodes[node.id];
-
+            if (allNodes[node.id] !== undefined) {
+              node.lazyUrl = '/' + allNodes[node.id];
+              loadSelectBox();
+            } else {
+                alert("An problem appear. Please reload a page");
+            }
             currentNode = node;
             firstIteration = 1;
-            loadSelectBox();
         }
 
         function iteratesNodesAndChangeIt(childrenOfCurrentNode) {
@@ -91,24 +97,26 @@
         }
 
         function moveNode(event, nodes, isSourceNode, source, isTargetNode, target) {
-            //iteratesNodesAndChangeIt(currentNode.children);
-            xhr.open("PUT", '/' + allNodes[source.id] + '/' + allNodes[target.id], true);
-            xhr.send();
-            easyTree.addNode(source, target.id);
-            var childrenWithMovingNode = easyTree.getNode(target.id).children;
-            for (var i = 0, size = childrenWithMovingNode.length; i < size; i++) {
-                if (childrenWithMovingNode[i].text === source.text){
-                    delete allNodes[source.id];
-                    allNodes[childrenWithMovingNode[i].id] = allNodes[target.id] + '->' + source.text;
-                }
+            if (allNodes[source.id] !== undefined && allNodes[target.id] !== undefined) {
+              xhr.open("PUT", '/' + allNodes[source.id] + '/' + allNodes[target.id], true);
+              xhr.send();
+              easyTree.addNode(source, target.id);
+              var childrenWithMovingNode = easyTree.getNode(target.id).children;
+              for (var i = 0, size = childrenWithMovingNode.length; i < size; i++) {
+                  if (childrenWithMovingNode[i].text === source.text){
+                      delete allNodes[source.id];
+                      allNodes[childrenWithMovingNode[i].id] = allNodes[target.id] + '->' + source.text;
+                  }
+              }
+              easyTree.removeNode(source.id);
+              easyTree.rebuildTree();
+            } else {
+                alert("An problem appear. Please push another folder in tree");
             }
-            easyTree.removeNode(source.id);
-            easyTree.rebuildTree();
 
         }
 
         function addNode() {
-            //iteratesNodesAndChangeIt(currentNode.children);
             var sourceNode = {};
             sourceNode.text = $('#nodeText').val();
             sourceNode.isFolder = true;
@@ -117,17 +125,12 @@
 
             xhr.open("PUT", '/' + allNodes[node.id] + "->" + sourceNode.text, true);
             xhr.send();
-
             easyTree.addNode(sourceNode, targetId);
             easyTree.rebuildTree();
             loadSelectBox();
         }
 
-        // we have to reload selected box at the end of each function to ensure it is always up to date
         function loadSelectBox() {
-            // if (currentNode != null) {
-            //     iteratesNodesAndChangeIt(currentNode.children);
-            // }
             var select = $('#lstNodes')[0];
             var currentlySelected = $('#lstNodes :selected').val();
 
@@ -169,13 +172,13 @@
             xhr.open("DELETE", '/' + allNodes[node.id], true);
             xhr.send();
 
+            delete allNodes[node.id];
             easyTree.removeNode(node.id);
             easyTree.rebuildTree();
             loadSelectBox();
         }
 
         function edit() {
-            //iteratesNodesAndChangeIt(currentNode.children);
             var nameNode = $('#nodeText').val();
             var currentlySelected = $('#lstNodes :selected').val();
             var node = easyTree.getNode(currentlySelected);
@@ -200,7 +203,7 @@
 
             xhr.open("POST", prefix + '/' + resultDirectory + nameNode, true);
             xhr.send();
-
+            allNodes[node.id] = resultDirectory + nameNode;
             node.text = nameNode;
             easyTree.rebuildTree();
             loadSelectBox();

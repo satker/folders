@@ -10,4 +10,5 @@ public interface FolderDao {
     void addNewFolder(String parentFolderDirectory, String newFolderDirectory);
     void updateFoldersNameAfterEditFolderName(String directoryOldFolder, String directoryNewFolder);
     void moveFolderToAnotherRepository(String directoryFolderTo, String directoryFolderFrom, String to);
+    void removeParentFolderAndChildFolders(String directory);
 }

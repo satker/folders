@@ -17,4 +17,10 @@
         <property name="driverClassName" value="org.h2.Driver"/>
     </bean>
 
+    <bean
+      class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
 </beans>

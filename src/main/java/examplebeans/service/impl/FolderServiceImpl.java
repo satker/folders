@@ -95,14 +95,20 @@ public class FolderServiceImpl implements FolderService {
     }
 
     @Override
-    public void setDirectoryForSearch(String directoryForSearch) {
-        String step1 = String.join("\\", directoryForSearch.split("->"));
-        this.directoryForSearch = String.join(":\\", step1.split("-\\\\"));
+    public boolean setDirectoryForSearch(String directoryForSearch) {
+        File file = new File(directoryForSearch);
+        if(file.exists() && file.isDirectory()){
+            this.directoryForSearch = directoryForSearch;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void removeNode(String folder) {
         String directoryRemovingNode = getDirectoryFolder(folder);
         FileUtils.deleteRecursive(directoryRemovingNode, true);
+        folderDao.removeParentFolderAndChildFolders(directoryRemovingNode);
     }
 
     public void moveNode(String from, String to) {
