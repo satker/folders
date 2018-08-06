@@ -13,7 +13,6 @@ public class FlywayConfiguration {
   public Flyway flyway(@Autowired DataSource dataSource) {
     Flyway flyway = new Flyway();
     flyway.setDataSource(dataSource);
-    flyway.setLocations("filesystem:D:\\java_projects\\folders\\src\\main\\webapp\\db\\migration");
     flyway.setBaselineOnMigrate(true);
     return flyway;
   }
