@@ -17,6 +17,7 @@
     </head>
 
     <body>
+    <h2>Directory tree:</h2>
     <div id="demo_menu" style="float:left; width:250px;">
         <c:if test="${not empty list}">
             <ul>
@@ -31,13 +32,13 @@
     </div>
     <div class="box" style="float:left; width:335px; margin-left:30px">
         <div class="box_content">
-            <input type="text" value="New Node" style="width:200px" id="nodeText"/> Node Text
+            Name folder: <input type="text" value="New_folder" style="width:200px" id="nodeText"/>
             <br/><br/>
             <select id="lstNodes"></select>
             <br/><br/>
-            <button onclick="addNode(); return false;">Add</button>
-            <button onclick="removeNodeX(); return false;">Remove</button>
-            <button onclick="edit(); return false;">Edit node name</button>
+            <button onclick="addNode(); return false;">Add folder</button>
+            <button onclick="removeNodeX(); return false;">Remove folder</button>
+            <button onclick="edit(); return false;">Edit folder name</button>
             <br/>
         </div>
     </div>

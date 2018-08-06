@@ -15,8 +15,8 @@
 <body>
 
 <spring:form method="post"  modelAttribute="folder" action="/enter-directory">
-  Name: <spring:input path="directory"/>
-  <spring:button>Next Page</spring:button>
+    Enter directory: <spring:input path="directory"/>
+  <spring:button>Start search</spring:button>
 
 </spring:form>
 
